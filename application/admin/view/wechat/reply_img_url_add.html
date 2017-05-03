@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+{load href="__STATIC__/css/amazeui.min.css,__STATIC__/css/app.css" /}
+{load href="__STATIC__/js/jquery.min.js,__STATIC__/js/amazeui.min.js,__STATIC__/layer/layer.js,__STATIC__/js/app.js,__STATIC__/am-AutoComplete/am-AutoComplete.js" /}
+{load href="__STATIC__/ueditor/third-party/webuploader/webuploader.min.js" /} 
+<body class="theme-white" style="background-color: #fff;" data-type="widgets">
+    <div class="widget">
+        <form id="add_form" action="{:url('/admin/wechat/replyadd','type='.$type)}" class="am-form am-form-horizontal" method="post">     
+            <input type="hidden" name="info[id]" value="{$info.id}" />
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-4 am-form-label widget-title">名称</label>
+                <div class="am-u-sm-8">
+                    <input type="text" name="info[name]" value="{$info.name}">
+                </div>
+            </div>
+
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-4 am-form-label widget-title">触发关键字</label>
+                <div class="am-u-sm-8">
+                    <input type="text" name="info[key]" value="{$info.key}">
+                </div>
+            </div>
+
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-4 am-form-label widget-title">内容标题</label>
+                <div class="am-u-sm-8">
+                    <input id="title" type="text" name="info[content][Title]" value="{$info.content['Title']}">
+                </div>
+            </div> 
+
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-4 am-form-label widget-title">内容描述</label>
+                <div class="am-u-sm-8">
+                    <input id="description" type="text" name="info[content][Description]" value="{$info.content['Description']}">
+                </div>
+            </div> 
+
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-4 am-form-label widget-title">跳转地址</label>
+                <div class="am-u-sm-8">
+                    <input id="url" type="text" name="info[content][Url]" value="{$info.content['Url']}">
+                </div>
+            </div>  
+
+            <div class="am-form-group app_uploader">
+                <label for="user-weibo" class="am-u-sm-4 am-form-label widget-title">缩略图</label>
+                <div class="am-u-sm-8">
+                    <div class="am-form-group am-form-file" id="uploader">
+                        <div class="tpl-form-file-img">
+                            <img id="img" class="widget-link-thumb" {if $info.content['PicUrl']}src="{$info.content['PicUrl']}"{else}style="display: none;"{/if} alt="">
+                        </div>
+
+                        <div id="picker">添加缩略图</div>
+                        <input id="picurl" name="info[content][PicUrl]" value="{$info.content['PicUrl']}"  type="hidden" id="thumb">
+                    </div>
+                </div>
+            </div>                                              
+
+            <div class="am-form-group">
+                <div class="am-u-sm-8 am-u-sm-offset-4">
+                    <button type="button" data-model="ajaxform" data-option="{form:'#add_form'}" data-success="callback" class="am-btn am-btn-default am-btn-success">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+    function callback(data){
+        if(data.code==1){
+            parent.location.reload();
+        }else{
+            layer.msg(data.msg);
+        }
+    }
+    $(function() {
+        var uploader = WebUploader.create({
+            auto: true,
+            // swf文件路径
+            swf: '__STATIC__/ueditor/third-party/webuploader/Uploader.swf',
+            // 文件接收服务端。
+            server: "{:url('/admin/editor')}?action=uploadimage",
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#picker',
+            // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+            resize: false,
+            //表单名称
+            fileVal: 'upfile',
+            thumb: {
+                width: 120,
+                height: 60,
+                // 图片质量，只有type为`image/jpeg`的时候才有效。
+                quality: 70,
+                // 是否允许放大，如果想要生成小图的时候不失真，此选项应该设置为false.
+                allowMagnify: true,
+            }
+        });
+        //上传成功
+        uploader.on('uploadSuccess', function(file, response) {
+            if (response.state == 'SUCCESS') {
+                $("#thumb").val(response.url);
+                $("#img").attr('src', response.url).show();
+            } else {
+                layer.msg(response.state);
+            }
+        });
+        uploader.on('uploadError', function(file, reason) {
+            layer.msg('上传失败，错误码：' + reason);
+        });
+
+        $("#title").complete({
+            width:300,
+            url:"{:url('/admin/wechat/getContent')}",
+            click:function(self,_this){
+                var index=$(self).data('index');
+                var data=_this.data[index];
+                _this.$element.val(data.title);
+                $("#description").val(data.description);
+                $("#url").val(data.url);
+                if(data.thumb){
+                    $("#picurl").val(data.thumb);
+                    $("#img").attr('src',data.thumb).show();
+                }
+            }
+        });
+    });    
+    </script>
+</body>
+
+</html>

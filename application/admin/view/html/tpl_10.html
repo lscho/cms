@@ -1,0 +1,41 @@
+{/* 图片上传模板 */ }      
+{load href="__STATIC__/ueditor/third-party/webuploader/webuploader.min.js" /}         
+<div id="uploader" class="app_uploader">
+    <div class="tpl-form-file-img">
+        <img id="{$id}_img" style="width: 100px;height: 60px;" {if $value}src="{$value}"{else}style="display: none;"{/if} alt="">
+    </div>
+    <div id="{$id}_picker">上传图片</div>
+    <input id="{$id}" name="{$name}" value="{$value}"  type="hidden">
+</div>
+<font class="tips">{$tips}</font>
+<script type="text/javascript">
+$(function(){
+        var uploader = WebUploader.create({
+            auto: true,
+            // swf文件路径
+            swf: '__STATIC__/ueditor/third-party/webuploader/Uploader.swf',
+            // 文件接收服务端。
+            server: "{:url('admin/editor/index')}?action=uploadimage",
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#{$id}_picker',
+            // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+            resize: false,
+            //表单名称
+            fileVal:'upfile',
+            duplicate :true
+        });
+        //上传成功
+        uploader.on( 'uploadSuccess', function(file,response) {
+            if(response.state=='SUCCESS'){
+                $("#{$id}").val(response.url);
+                $("#{$id}_img").attr('src',response.url).show();
+            }else{
+                layer.msg(response.state);
+            }
+        });
+        uploader.on('uploadError',function(file,reason){
+            layer.msg('上传失败，错误码：'+reason);
+        });	
+})
+</script>

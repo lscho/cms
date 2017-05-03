@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<body class="theme-white" style="background-color: #fff;" data-type="widgets">
+    {load href="__STATIC__/css/amazeui.min.css,__STATIC__/css/app.css" /}
+    {load href="__STATIC__/js/jquery.min.js,__STATIC__/js/amazeui.min.js,__STATIC__/layer/layer.js,__STATIC__/js/app.js" /}
+    <div class="widget">
+        <form id="add_form" action="{:url('/admin/models/field','type='.$Request.param.type.'&id='.$Request.param.id)}" class="am-form am-form-horizontal" method="post">
+            <input type="hidden" name="info[id]" value="{$info.id}">
+            <input type="hidden" name="info[models_id]" value="{$info.models_id??$Request.param.id}">
+            <input type="hidden" name="info[is_system]" value="{$info.is_system}">
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-4 am-form-label widget-title"><font class="am-text-danger">*</font>字段名称</label>
+                <div class="am-u-sm-8">
+                    <input type="text" name="info[title]" value="{$info.title}">
+                </div>
+            </div>
+
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-4 am-form-label widget-title"><font class="am-text-danger">*</font>英文名称</label>
+                <div class="am-u-sm-8">
+                    <input type="text" name="info[name]" value="{$info.name}" {if $info.is_system}readonly{/if}>
+                </div>
+            </div> 
+
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-4 am-form-label widget-title">字段提示</label>
+                <div class="am-u-sm-8">
+                    <input type="text" name="info[tips]" value="{$info.tips}">
+                </div>
+            </div>                        
+
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-4 am-form-label widget-title"><font class="am-text-danger">*</font>数据类型</label>
+                <div class="am-u-sm-8">
+                    {if $info.is_system}
+                    <input type="text" readonly value="{:lang('dataType')[$info.type][0]}">
+                    <input type="hidden" name="info[type]" value="{$info.type}">
+                    {else}
+                    <select name="info[type]">
+                        {volist name=":lang('dataType')" id="vo"}
+                        <option value="{$key}" {if $info.type==$key}selected{/if}>{$vo[0]}</option>
+                        {/volist}
+                    </select>
+                    {/if}
+                </div>
+            </div> 
+
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-4 am-form-label widget-title"><font class="am-text-danger">*</font>数据长度</label>
+                <div class="am-u-sm-8">
+                    <input type="text" name="info[lang]" value="{$info.lang}" {if $info.is_system}readonly{/if}>
+                </div>
+            </div>
+
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-4 am-form-label widget-title">模板宽度</label>
+                <div class="am-u-sm-8">
+                    <input type="text" name="info[width]" value="{$info.width}">
+                </div>
+            </div>
+
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-4 am-form-label widget-title">模板高度</label>
+                <div class="am-u-sm-8">
+                    <input type="text" name="info[height]" value="{$info.height}">
+                </div>
+            </div>            
+
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-4 am-form-label widget-title">默认值</label>
+                <div class="am-u-sm-8">
+                    <input type="text" name="info[default]" value="{$info.default}">
+                </div>
+            </div>
+
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-4 am-form-label widget-title">附加数据</label>
+                <div class="am-u-sm-8">
+                    <textarea name="info[data]">{$info.data}</textarea>
+                </div>
+            </div>                                              
+            {if $info.name=='title' and $info.is_system==1}
+            <input type="hidden" name="info[required]" value="1">
+            {else}
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-4 am-form-label widget-title">是否必填</label>
+                <div class="am-u-sm-8 tpl-switch">
+                <input type="checkbox" class="ios-switch bigswitch tpl-switch-btn" name="info[required]" value="1" {if $info.required!==0} checked{/if}>
+                <div class="tpl-switch-btn-view">
+                <div></div>
+                </div>                    
+                </div>
+            </div> 
+            {/if}
+
+            {if $models.type=='form'}
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-4 am-form-label widget-title">列表显示</label>
+                <div class="am-u-sm-8 tpl-switch">
+                <input type="checkbox" class="ios-switch bigswitch tpl-switch-btn" name="info[admin_show]" value="1" {if $info.admin_show==1} checked{/if}>
+                <div class="tpl-switch-btn-view">
+                <div></div>
+                </div>                    
+                </div>
+            </div>                                                      
+            {/if}
+
+            <div class="am-form-group">
+                <div class="am-u-sm-8 am-u-sm-offset-4">
+                    <button type="button" data-model="ajaxform" data-option="{form:'#add_form'}" data-success="callback" class="am-btn am-btn-default am-btn-success">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+    function callback(data){
+        if(data.code==1){
+            parent.location.reload();
+        }else{
+            layer.msg(data.msg);
+        }
+    }
+    </script>
+</body>
+
+</html>

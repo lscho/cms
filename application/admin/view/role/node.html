@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    {load href="__STATIC__/css/amazeui.min.css,__STATIC__/css/app.css" /}
+    {load href="__STATIC__/js/jquery.min.js,__STATIC__/js/amazeui.min.js,__STATIC__/layer/layer.js,__STATIC__/js/app.js" /}
+    <body class="theme-white" style="background-color: #fff;" data-type="widgets">
+        <div class="widget">
+            <form id="add_form" action="{:url('/admin/role/node')}" class="am-form am-form-horizontal" method="post">
+                <input type="hidden" name="role_id" value="{$Think.get.id}"/>
+                <div class="am-g" style="width: 85%">
+                                        {volist name=":cache('node_data')[1]['son']" id="val"}
+                                            <div class="am-panel  am-panel-success node-two">
+                                              <div class="am-panel-hd">
+                                                <label class="am-checkbox-inline" style="padding-top: 0px;">
+                                                <input type="checkbox" name="id[]" data-action='select' value="{$val.id}" data-am-ucheck {if in_array($val.id,$node)}checked{/if}>
+                                                    {$val.title}
+                                                </label>                                      
+                                              </div>
+                                              <div class="am-panel-bd  node-three">
+                                                {volist name="val.son" id="vals"}
+                                                <label class="am-checkbox-inline" style="padding-top: 0px;">
+                                                <input type="checkbox" data-parent="{$vals.parentid}"  name="id[]" value="{$vals.id}" data-am-ucheck {if in_array($vals.id,$node)}checked{/if}>
+                                                    {$vals.title}
+                                                </label>
+                                                {/volist}
+                                              </div>
+                                            </div>
+                                        {/volist}
+                    <div class="am-form-group">
+                        <div class="am-u-sm-8 am-u-sm-offset-4">
+                            <button type="button" data-model="ajaxform" data-option="{form:'#add_form'}" data-success="callback" class="am-btn am-btn-default am-btn-success">
+                                保存
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <script type="text/javascript">
+        function callback(data){
+            if(data.code==1){
+                window.top.location.reload();
+            }else{
+                layer.msg(data.msg);
+            }
+        }
+        $(function() {
+            $("[data-action='select']").click(function(){
+                var checked=$(this).is(':checked');
+                var val=$(this).val();
+                $("[data-parent="+val+"]").prop('checked',checked);
+            });
+        });
+        </script>
+    </body>
+</html>

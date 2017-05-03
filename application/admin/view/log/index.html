@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<body class="theme-white" data-type="widgets">
+    {load href="__STATIC__/css/amazeui.min.css,__STATIC__/css/app.css,__STATIC__/am-page/amazeui.page.css"" /}
+    {load href="__STATIC__/js/jquery.min.js,__STATIC__/js/amazeui.min.js,__STATIC__/layer/layer.js,__STATIC__/js/app.js,__STATIC__/am-page/amazeui.page.js" /}
+    <div class="am-g tpl-g">
+        <!-- 内容区域 -->
+            <div class="row-content am-cf">
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title  am-cf">系统日志</div>
+                            </div>
+                            <div class="widget-body  am-fr">
+                                <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                                    <div class="am-form-group">
+                                        <div class="am-btn-toolbar">
+                                            <div class="am-btn-group am-btn-group-xs">
+                                                <button type="button" class="am-btn am-btn-default am-btn-danger" data-model="ajax" data-action="get" data-url="{:url('/admin/log/delete')}" data-msg="确定要清除一个月前的日志吗？" data-success="del_success">
+                                                <span class="am-icon-trash"></span> 清除一个月前日志</button>                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="am-u-sm-12">
+                                    <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                                        <thead>
+                                            <tr>
+                                                <th>时间</th>
+                                                <th>用户名</th>
+                                                <th>IP地址</th>
+                                                <th>网址</th>
+                                                <th>动作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {volist name="list" id="vo"}
+                                            <tr class="gradeX">
+                                                <td>{:date('Y-m-d H:i:s',$vo.addtime)}</td>
+                                                <td>{$vo.username}</td>
+                                                <td>{$vo.ip}</td>
+                                                <td>{$vo.url}</td>
+                                                <td>{$vo.action}</td>
+                                            </tr>
+                                            {/volist}
+                                            <!-- more data -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="am-u-lg-12 am-cf">
+                                <div class="am-fr" data-am-page="{pages:{$list->lastPage()},jump:'{:url('/admin/log/index')}?page=%page%',curr:{$list->currentPage()}}">
+                                </div>                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <script type="text/javascript">
+        function del_success(data) {
+            if(data.code==1){
+                layer.msg(data.msg, {icon: 1,time: 1000},function(){
+                    window.location.reload();
+                });
+            }else{
+                layer.msg(data.msg, {icon: 2});
+            }
+        }
+    </script>
+</body>
+</html>

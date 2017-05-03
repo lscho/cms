@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<body class="theme-white" data-type="widgets">
+    {load href="__STATIC__/css/amazeui.min.css,__STATIC__/css/app.css,__STATIC__/am-page/amazeui.page.css" /}
+    {load href="__STATIC__/js/jquery.min.js,__STATIC__/js/amazeui.min.js,__STATIC__/layer/layer.js,__STATIC__/js/app.js,__STATIC__/am-page/amazeui.page.js" /}
+    <div class="am-g tpl-g">
+        <!-- 内容区域 -->
+            <div class="row-content am-cf">
+                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                    <div class="widget am-cf">
+                        <div class="widget-head am-cf">
+                            <div class="widget-title  am-cf">数据库管理</div>
+                        </div>
+                        <div class="widget-body  am-fr">
+                            <div class="am-u-sm-12 am-u-md-2 am-u-lg-2">
+                                <div class="am-form-group">
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <div class="am-dropdown" data-am-dropdown>
+                                                <button class="am-btn am-btn-default am-btn-success am-btn-xs" data-model="layer" data-action="open" data-option="{title:'数据库备份',type:2,content:['{:url('/admin/database/backup')}'],area: ['80%', '80%']}" data-close="close">
+                                                    <span class="am-icon-plus">
+                                                    </span>
+                                                    备份数据
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="am-u-sm-12">
+                                <form action="{:url('/admin/content/sort')}" method="post" id="sort_form">
+                                    <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                                        <thead>
+                                            <tr>
+                                                <th>表名</th>
+                                                <th>数据</th>
+                                                <th>驱动</th>
+                                                <th>大小</th>
+                                                <th>编码</th>
+                                                <th>创建时间</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {volist name="list" id="vo"}
+                                            <tr class="gradeX">
+                                                <td>{$vo.Name}</td>
+                                                <td>{$vo.Rows}</td>
+                                                <td>{$vo.Engine}</td>
+                                                <td>{:round($vo.Data_length/1024,2)} KB
+                                                </td>
+                                                <td>{$vo.Collation}</td>
+                                                <td>{$vo.Create_time}</td>
+                                                <td>
+                                                    <div class="tpl-table-black-operation">
+                                                        <a href="javascript:;"  data-model="ajax" data-action="get" data-url="{:url('/admin/database/optimize')}" data-option="{name:'{$vo.Name}'}" data-success="callback" >
+                                                            <i class="am-icon-pencil"></i> 优化表
+                                                        </a>
+                                                        <a href="javascript:;" data-model="ajax" data-action="get" data-url="{:url('/admin/database/repai')}" data-option="{name:'{$vo.Name}'}" data-success="callback" class="tpl-table-black-operation-add">
+                                                            <i class="am-icon-random"></i> 修复表
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {/volist}
+                                            <!-- more data -->
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <script type="text/javascript">
+    function callback(data) {
+        if (data.code == 1) {
+            console.log(data.data);
+            layer.msg(data.msg , {
+                icon: 1,
+                time: 3000
+            });
+        } else {
+            layer.msg(data.msg, {
+                icon: 2
+            });
+        }
+    }
+    </script>
+</body>
+
+</html>

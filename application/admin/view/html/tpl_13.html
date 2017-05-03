@@ -1,0 +1,12 @@
+{/* 栏目选择模板 */ }
+<select name="{$name}" id="{$id}">
+    <option value="0">
+        请选择
+    </option>
+    {volist name=":cache('catlist')" id="vo"}
+    <option value="{$vo.catid}" {if $Request.get.catid==$vo.catid||$value==$vo.catid}selected{/if}>
+        |—{:str_repeat('——',$vo['level'])}{$vo.catname}
+    </option>
+    {/volist}
+</select>
+<font class="tips">{$tips}</font>

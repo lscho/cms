@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+{load href="__STATIC__/css/amazeui.min.css,__STATIC__/css/app.css" /}
+{load href="__STATIC__/js/jquery.min.js,__STATIC__/js/amazeui.min.js,__STATIC__/layer/layer.js,__STATIC__/js/app.js" /}
+<body class="theme-white" style="background-color: #fff;" data-type="widgets">
+    <div class="widget">
+        <form id="add_form" action="{:url('/admin/crontab/add')}" class="am-form am-form-horizontal" method="post">
+            <input type="hidden" name="info[id]" value="{$info.id}" />        
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-4 am-form-label widget-title">任务名称</label>
+                <div class="am-u-sm-8">
+                    <input type="text" name="info[title]" value="{$info.title}">
+                </div>
+            </div>
+
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-4 am-form-label widget-title">任务类型</label>
+                <div class="am-u-sm-8">
+                    <label class="am-radio-inline" style="padding-top: 0;">
+                        <input type="radio" value="1" name="info[type]" data-toggle="time" data-am-ucheck {if !$info||$info.type==1}checked{/if}>定时执行
+                    </label> 
+                    <label class="am-radio-inline" style="padding-top: 0;">
+                        <input type="radio" value="2" name="info[type]" data-toggle="interval" data-am-ucheck {if $info.type==2}checked{/if}> 循环执行
+                    </label>
+                </div>
+            </div>
+
+            <div class="am-form-group data-toggle" id="time">
+                <label for="doc-ipt-3" class="am-u-sm-4 am-form-label widget-title">定时时间</label>
+                <div class="am-u-sm-8">
+                    {:tpl(['type'=>7,'name'=>'time','prefix'=>'info'],$info['time'])}
+                </div>
+            </div>
+
+            <div class="am-form-group data-toggle" id="interval">
+                <label for="doc-ipt-3" class="am-u-sm-4 am-form-label widget-title">间隔时间</label>
+                <div class="am-u-sm-8">
+                    <input type="text" name="info[interval]" value="{$info.interval}" style="width: 200px;display: inline-block;"> 
+                    <span>天</span>
+                </div>
+            </div>
+
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-4 am-form-label widget-title">执行任务</label>
+                <div class="am-u-sm-8">
+                <select name="info[action]">
+                    <option value="mysqlBackup">数据库备份</option>
+                </select>
+                </div>
+            </div>            
+
+
+            <div class="am-form-group">
+                <div class="am-u-sm-8 am-u-sm-offset-4">
+                    <button type="button" data-model="ajaxform" data-option="{form:'#add_form'}" data-success="callback" class="am-btn am-btn-default am-btn-success">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+    function callback(data){
+        if(data.code==1){
+            parent.location.reload();
+        }else{
+            layer.msg(data.msg);
+        }
+    }
+    $(function(){
+        var toggle=function(){
+            $(".data-toggle").hide();
+            var id=$("[data-toggle]:checked").data('toggle');
+            $("#"+id).show();
+        }
+        $("[data-toggle]").click(toggle);
+        toggle();
+    });
+    </script>
+</body>
+
+</html>

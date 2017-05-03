@@ -1,0 +1,4 @@
+public/upload
+application/database.php
+runtime/
+.env

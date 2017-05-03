@@ -1,0 +1,18 @@
+<body class="theme-white">
+{load href="__STATIC__/css/amazeui.min.css,__STATIC__/css/app.css" /}
+{load href="__STATIC__/js/jquery.min.js,__STATIC__/js/amazeui.min.js,__STATIC__/js/app.js" /}  
+<div class="left-sidebar">
+    <!-- 菜单 -->
+            <ul class="sidebar-nav sidebar-nav-sub">
+                {volist name="menu" id="vo"}
+                {if $parentid!=0 and $vo.parentid==$parentid and in_array($vo.id,session('menu_node'))}
+                <li class="sidebar-nav-link">
+                    <a data-sidebar-frame href="javascript:" data-src="{:url($vo.model.'/'.$vo.controller.'/'.$vo.action,$vo.parameter)}" target="_content">
+                        <span class="am-icon-{$vo.icon ?$vo.icon: 'angle-right'} sidebar-nav-link-logo"></span> {$vo.title}
+                    </a>
+                </li>
+                {/if}
+                {/volist}
+            </ul>
+</div>
+</body>

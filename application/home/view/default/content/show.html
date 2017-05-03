@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<!--头部-->
+{include file="public/header" /}
+<!--头部结束-->
+<body>
+<!--导航-->
+{include file="public/navigation" /}
+<!--导航结束-->
+
+<!--top-->
+{include file="public/top" /}
+<!--top结束-->
+
+<div class="am-container-1 margin-t30">
+	<div class="words-title ">
+		<span>{$info.title}</span>
+		<div>{$info.addtime}</div>
+	</div>
+</div>
+		
+<div class="solution-inform">
+	<div class=" solution-inform-content-all">
+		<div class="solution-inform-content">
+        {$info.content}
+		</div>
+	</div>
+</div>
+
+{include file="public/footer" /}
+
+</body>
+</html>

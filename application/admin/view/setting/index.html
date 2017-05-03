@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+    <body class="theme-white" data-type="widgets">
+        {load href="__STATIC__/css/amazeui.min.css,__STATIC__/css/app.css" /}
+        {load href="__STATIC__/js/jquery.min.js,__STATIC__/js/amazeui.min.js,__STATIC__/layer/layer.js,__STATIC__/js/app.js" /}
+        {load href="__STATIC__/ueditor/third-party/webuploader/webuploader.min.js,__STATIC__/ueditor/third-party/webuploader/webuploader.css" /}
+        <div class="am-g tpl-g">
+            <!-- 内容区域 -->
+            <div class="row-content am-cf">
+                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                    <div class="widget am-cf">
+                        <div class="widget-head am-cf">
+                            <div class="widget-title  am-cf">
+                                基础设置
+                            </div>
+                        </div>
+                        <div class="widget-body  am-fl">
+                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
+                                <div class="am-panel am-panel-default widget-panel">
+                                    <div class="am-panel-hd  widget-title">
+                                        基本
+                                    </div>
+                                    <div class="am-panel-bd">
+                                        <form id="web_form" action="{:url('/admin/setting')}" class="am-form am-form-horizontal" method="post">
+                                            <input name="model" value="web" type="hidden"/>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    站点名称
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[title]" value="{$info.web.title}" style="width: 200px;"/>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    关键词
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[keyword]" value="{$info.web.keyword}"/>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    站点描述
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[description]" value="{$info.web.description}"/>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    站点 LOGO
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <div class="am-input-group">
+                                                        <input type="text" class="am-form-field" name="info[logo]" id="logo" value="{$info.web.logo}"/>
+                                                        <span class="am-input-group-btn">
+                                                            <button class="am-btn am-btn-default" type="button" id="upload">
+                                                                上传
+                                                            </button>
+                                                            <span style="display: none;" name="{$name}" value="{$value}" id="_form_upload">
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    站点主题
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <select name="info[theme]">
+                                                        {volist name="theme" id="vo"}
+                                                        <option value="{$vo}" {if $info.web.theme==$vo}selected{/if}>
+                                                            {$vo}
+                                                        </option>
+                                                        {/volist}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <footer class="am-panel-footer am-cf">
+                                        <div class="am-fr">
+                                        <button class="am-fr am-btn am-btn-success am-btn-xs" data-model="ajaxform" data-option="{form:'#web_form'}" data-success="callback">
+                                            <i class="am-icon am-icon-save">
+                                            </i>
+                                            保存
+                                        </button>
+                                        </div>
+                                    </footer>
+                                </div>
+                            </div>
+                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
+                                <div class="am-panel am-panel-default widget-panel">
+                                    <div class="am-panel-hd  widget-title">
+                                        邮箱
+                                    </div>
+                                    <div class="am-panel-bd">
+                                        <form id="email_form" action="{:url('/admin/setting')}" class="am-form am-form-horizontal" method="post">
+                                            <input name="model" value="email" type="hidden"/>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    邮件服务器
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[server]" value="{$info.email.server}"/>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    邮件端口
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[port]" value="{$info.email.port}"/>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    发件人
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[username]" value="{$info.email.username}"/>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    邮件账号
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[user]" value="{$info.email.user}"/>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    邮件密码
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="password" name="info[password]" value="{$info.email.password}"/>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <footer class="am-panel-footer am-cf">
+                                        <div class="am-fr">
+                                            <button class="am-btn am-btn-primary am-btn-xs" data-model="ajax" data-action="post" data-url="{:url('admin/email/test')}" data-msg="请填写测试邮箱" data-prompt=":email" data-success="callback">
+                                                <i class="am-icon am-icon-save">
+                                                </i>
+                                                测试
+                                            </button>
+                                            <button class="am-btn am-btn-success am-btn-xs" data-model="ajaxform" data-option="{form:'#email_form'}" data-success="callback">
+                                                <i class="am-icon am-icon-save">
+                                                </i>
+                                                保存
+                                            </button>
+                                        </div>
+                                    </footer>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="widget-body  am-fl">
+                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
+                                <div class="am-panel am-panel-default widget-panel">
+                                    <div class="am-panel-hd  widget-title">
+                                        站点
+                                    </div>
+                                    <div class="am-panel-bd">
+                                        <form id="site_form" action="{:url('/admin/setting')}" class="am-form am-form-horizontal" method="post">
+                                            <input name="model" value="site" type="hidden"/>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    站点域名
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[host]" value="{$info.site.host}"/>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    资源域名
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[static]" value="{$info.site.static}"/>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    附件域名
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[upload]" value="{$info.site.upload}"/>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    备案号码
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[icp]" value="{$info.site.icp}"/>
+                                                </div>
+                                            </div>                                            
+                                        </form>
+                                    </div>
+                                    <footer class="am-panel-footer am-cf">
+                                        <div class="am-fr">
+                                        <button class="am-fr am-btn am-btn-success am-btn-xs" data-model="ajaxform" data-option="{form:'#site_form'}" data-success="callback">
+                                            <i class="am-icon am-icon-save">
+                                            </i>
+                                            保存
+                                        </button>
+                                        </div>
+                                    </footer>
+                                </div>
+                            </div>
+
+                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
+                                <div class="am-panel am-panel-default widget-panel">
+                                    <div class="am-panel-hd  widget-title">
+                                        附加
+                                    </div>
+                                    <div class="am-panel-bd">
+                                        <form id="util_form" action="{:url('/admin/setting')}" class="am-form am-form-horizontal" method="post">
+                                            <input name="model" value="util" type="hidden"/>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    底部文字
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <textarea name="info[text]">{$info.util.text}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    统计脚本
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <textarea name="info[script]">{$info.util.script}</textarea>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <footer class="am-panel-footer am-cf">
+                                        <div class="am-fr">
+                                        <button class="am-fr am-btn am-btn-success am-btn-xs" data-model="ajaxform" data-option="{form:'#util_form'}" data-success="callback">
+                                            <i class="am-icon am-icon-save">
+                                            </i>
+                                            保存
+                                        </button>
+                                        </div>
+                                    </footer>
+                                </div>
+                            </div>                            
+
+                        </div>  
+
+                        <div class="widget-body  am-fl">
+                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
+                                <div class="am-panel am-panel-default widget-panel">
+                                    <div class="am-panel-hd  widget-title">
+                                        文字水印
+                                    </div>
+                                    <div class="am-panel-bd">
+                                        <form id="water_form" action="{:url('/admin/setting')}" class="am-form am-form-horizontal" method="post">
+                                            <input name="model" value="water" type="hidden"/>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    文字内容
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[text]" value="{$info.water.text}"/>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    文字颜色
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[color]" value="{$info.water.color}"/>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    字体大小
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[fontsize]" value="{$info.water.fontsize}"/>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    文字字体
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[ttf]" value="{$info.water.ttf}"/>
+                                                </div>
+                                            </div>                                            
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    水印位置
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[locate]" value="{$info.water.locate}"/>
+                                                </div>
+                                            </div>  
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    偏移量
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[offset]" value="{$info.water.offset}"/>
+                                                </div>
+                                            </div>                                                                                       
+                                        </form>
+                                    </div>
+                                    <footer class="am-panel-footer am-cf">
+                                        <div class="am-fr">
+                                        <button class="am-fr am-btn am-btn-success am-btn-xs" data-model="ajaxform" data-option="{form:'#water_form'}" data-success="callback">
+                                            <i class="am-icon am-icon-save">
+                                            </i>
+                                            保存
+                                        </button>
+                                        </div>
+                                    </footer>
+                                </div>
+                            </div>
+
+                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
+                                <div class="am-panel am-panel-default widget-panel">
+                                    <div class="am-panel-hd  widget-title">
+                                        图片水印
+                                    </div>
+                                    <div class="am-panel-bd">
+                                        <form id="waterimg_form" action="{:url('/admin/setting')}" class="am-form am-form-horizontal" method="post">
+                                            <input name="model" value="water" type="hidden"/>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    水印地址
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[src]" value="{$info.water.src}"/>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    水印位置
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[imglocate]" value="{$info.water.imglocate}"/>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    透明度
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[alpha]" value="{$info.water.alpha}"/>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    图片质量
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[quality]" value="{$info.water.quality}"/>
+                                                </div>
+                                            </div>                                            
+                                        </form>
+                                    </div>
+                                    <footer class="am-panel-footer am-cf">
+                                        <div class="am-fr">
+                                        <button class="am-fr am-btn am-btn-success am-btn-xs" data-model="ajaxform" data-option="{form:'#waterimg_form'}" data-success="callback">
+                                            <i class="am-icon am-icon-save">
+                                            </i>
+                                            保存
+                                        </button>
+                                        </div>
+                                    </footer>
+                                </div>
+                            </div>                            
+
+                        </div>                         
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+        function callback(data) {
+            if (data.code == 1) {
+                layer.msg(data.msg, {
+                    icon: 1,
+                    time: 1000
+                }, function() {
+                    window.location.reload();
+                });
+            } else {
+                layer.msg(data.msg, {
+                    icon: 2
+                });
+            }
+        }
+        $(function() {
+            var uploader = WebUploader.create({
+                auto: true,
+                // swf文件路径
+                swf: '__STATIC__/webuploader/Uploader.swf',
+                // 文件接收服务端。
+                server: "{:url('/admin/editor')}?action=uploadimage",
+                // 选择文件的按钮。可选。
+                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+                pick: '#_form_upload',
+                // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+                resize: false,
+                //表单名称
+                fileVal:'upfile'
+            });
+                        //上传成功
+                        uploader.on( 'uploadSuccess', function(file,response) {
+                            if(response.state=='SUCCESS'){
+                                $("#logo").val(response.url)
+                            }else{
+                                layer.msg(response.state);
+                            }
+                        });
+                        uploader.on('uploadError',function(file,reason){
+                            layer.msg('上传失败，错误码：'+reason);
+                        });
+                        $("#upload").click(function(){
+                            $("#_form_upload input:file").click();
+                        });
+        });    
+        </script>
+    </body>
+</html>

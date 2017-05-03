@@ -1,0 +1,75 @@
+<header class="am-topbar header">
+    <div class="am-container-1">
+        <div class="left hw-logo">
+            <img class=" logo" src="__UPLOAD__{$setting.web.logo}"/>
+        </div>
+        <div class="am-collapse am-topbar-collapse right" id="doc-topbar-collapse">
+            <div class=" am-topbar-left am-form-inline am-topbar-right" role="search">
+                <ul class="am-nav am-nav-pills am-topbar-nav hw-menu">
+                    {volist name="navigation_data" id="vo"}
+                    <li>
+                        <a href="{$vo.url}" target="{$target}">
+                            {$vo.title}
+                        </a>
+                        {/volist}
+                    </li>
+                    {if session('id')}
+                    {else}
+                    <li style="display: none;">
+                        <a href="javascript:" data-am-modal="{target: '#doc-modal-1', width: 600, height: 600}">
+                            登录
+                        </a>
+                    </li>
+                    {/if}
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+{if !session('id')}
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="doc-modal-1">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">登录
+      <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+    </div>
+    <div class="am-modal-bd">
+<div class="am-tabs" data-am-tabs="{noSwipe: 1}" id="doc-tab-demo-1">
+  <ul class="am-tabs-nav am-nav am-nav-tabs">
+    <li class="am-active"><a href="javascript: void(0)">账号登录</a></li>
+    <li><a href="javascript: void(0)">微信扫码</a></li>
+  </ul>
+
+  <div class="am-tabs-bd">
+    <div class="am-tab-panel am-active">
+<form class="am-form am-form-horizontal">
+  <div class="am-form-group">
+    <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">账号</label>
+    <div class="am-u-sm-10">
+      <input type="text" name="username" placeholder="输入你的账号">
+    </div>
+  </div>
+
+  <div class="am-form-group">
+    <label for="doc-ipt-pwd-2" class="am-u-sm-2 am-form-label">密码</label>
+    <div class="am-u-sm-10">
+      <input type="password" name="username" id="doc-ipt-pwd-2" placeholder="输入你的密码">
+    </div>
+  </div>
+
+  <div class="am-form-group">
+    <div class="am-u-sm-10">
+      <button type="submit" class="am-btn am-btn-default">提交登入</button>
+    </div>
+  </div>
+
+</form>
+    </div>
+    <div class="am-tab-panel">
+      ...
+    </div>
+  </div>
+</div>
+    </div>
+  </div>
+</div>
+{/if}

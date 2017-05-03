@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%;overflow: hidden; ">
+{include file="public/header" /}
+<body class="theme-white" data-type="index">
+    <div class="am-g tpl-g" style="height: 100%;overflow: hidden; ">
+        <!-- 头部 -->
+        {include file="public/top" /}
+        <!-- 侧边导航栏 -->
+        <div class="left-sidebar" style="height: 100%">
+        <iframe name="_sidebar" src="{:url('/admin/index/sidebar')}"  scrolling="auto">
+        </iframe>        
+        </div>
+        <!-- 内容区域 -->
+        <div class="tpl-content-wrapper">
+        <iframe name="_content" src="{:url('/admin/index/home')}"  scrolling="auto">
+        </iframe>
+        </div>
+    </div>
+    {load href="__STATIC__/js/jquery.min.js,__STATIC__/js/amazeui.min.js,__STATIC__/js/app.js" /}
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<body class="theme-white" style="background-color: #fff;" data-type="widgets">
+    {load href="__STATIC__/css/amazeui.min.css,__STATIC__/css/app.css" /}
+    {load href="__STATIC__/js/jquery.min.js,__STATIC__/js/amazeui.min.js,__STATIC__/layer/layer.js,__STATIC__/js/app.js" /}
+    <div class="widget">
+        <form id="add_form" action="{:url('/admin/content/add','models_id='.$Request.param.models_id)}" class="am-form am-form-horizontal" method="post">
+            <input type="hidden" name="info[id]" value="{$info.id}">
+
+            {volist name="modelsData" id="vo"}
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-2 am-form-label widget-title">{if $vo.required==1}<font class="am-text-danger">*</font>{/if}{$vo.title}</label>
+                <div class="am-u-sm-10">
+                    {:tpl($vo,$vo.is_system?$info[$vo.name]:$info.info[$vo.name])}
+                </div>
+            </div>
+            {/volist}  
+
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-2 am-form-label widget-title">文章模板</label>
+                <div class="am-u-sm-10">
+                    <select name="info[tpl][pc]">
+                        <option value="0">
+                            默认模板
+                        </option>
+                        {volist name="tpl" id="vo"}
+                        <option value="{$key}" {if $info.tpl['pc']==$key}selected{/if}>
+                            {$vo}
+                        </option>
+                        {/volist}
+                    </select>
+                </div>
+            </div>
+            {if $setting['wap']['close']!=1}
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-2 am-form-label widget-title">手机模板</label>
+                <div class="am-u-sm-10">
+                    <select name="info[tpl][wap]">
+                        <option value="0">
+                            默认模板
+                        </option>
+                        {volist name="wapTpl" id="vo"}
+                        <option value="{$key}" {if $info.tpl['wap']==$key}selected{/if}>
+                            {$vo}
+                        </option>
+                        {/volist}
+                    </select>
+                </div>
+            </div>
+            {/if}                                                            
+
+            <div class="am-form-group">
+                <div class="am-u-sm-10 am-u-sm-offset-2">
+                    <button type="button" data-model="ajaxform" data-option="{form:'#add_form'}" data-success="callback" class="am-btn am-btn-default am-btn-success">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+    function callback(data){
+        if(data.code==1){
+            parent.location.reload();
+        }else{
+            layer.msg(data.msg);
+        }
+    }
+    </script>
+</body>
+
+</html>

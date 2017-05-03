@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+    <body class="theme-white" data-type="widgets">
+        {load href="__STATIC__/css/amazeui.min.css,__STATIC__/css/app.css" /}
+        {load href="__STATIC__/js/jquery.min.js,__STATIC__/js/amazeui.min.js,__STATIC__/layer/layer.js,__STATIC__/js/app.js" /}
+        <div class="am-g tpl-g">
+            <!-- 内容区域 -->
+            <div class="row-content am-cf">
+                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                    <div class="widget am-cf">
+                        <div class="widget-head am-cf">
+                            <div class="widget-title  am-cf">
+                                安全管理
+                            </div>
+                        </div>
+                        <div class="widget-body  am-fl">
+                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
+                                <div class="am-panel am-panel-default widget-panel">
+                                    <div class="am-panel-hd  widget-title">
+                                        后台
+                                    </div>
+                                    <div class="am-panel-bd">
+                                        <form id="admin_form" action="{:url('/admin/setting')}" class="am-form am-form-horizontal" method="post">
+                                            <input name="model" value="admin" type="hidden"/>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    独立域名
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[host]" value="{$info.admin.host}" style="width: 200px;"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    默认后台
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                <label class="am-radio-inline" style="padding-top: 0;">
+                                                    <input type="radio" value="1" name="info[close]" data-am-ucheck {if $info.admin.close==1}checked{/if}> 关闭
+                                                </label> 
+                                                <label class="am-radio-inline" style="padding-top: 0;">
+                                                    <input type="radio" value="0" name="info[close]" data-am-ucheck {if $info.admin.close!=1}checked{/if}> 开启
+                                                </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    登录错误次数
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="number" name="info[number]" value="{$info.admin.number}"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    限制IP
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <textarea name="info[ip]">{$info.admin.ip}</textarea>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <footer class="am-panel-footer am-cf">
+                                        <div class="am-fr">
+                                        <button class="am-fr am-btn am-btn-success am-btn-xs" data-model="ajaxform" data-option="{form:'#admin_form'}" data-success="callback">
+                                            <i class="am-icon am-icon-save">
+                                            </i>
+                                            保存
+                                        </button>
+                                        </div>
+                                    </footer>
+                                </div>
+                            </div>
+                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
+                                <div class="am-panel am-panel-default widget-panel">
+                                    <div class="am-panel-hd  widget-title">
+                                        附件
+                                    </div>
+                                    <div class="am-panel-bd">
+                                        <form id="upload_form" action="{:url('/admin/setting')}" class="am-form am-form-horizontal" method="post">
+                                            <input name="model" value="upload" type="hidden"/>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    允许上传文件
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[fileAllowFiles]" value="{$info.upload.fileAllowFiles}"/>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    文件大小（kb）
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[fileMaxSize]" value="{$info.upload.fileMaxSize}"/>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    允许上传图片
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[imageAllowFiles]" value="{$info.upload.imageAllowFiles}"/>
+                                                </div>
+                                            </div>                                                                                        
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    图片宽度（px）
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[imageCompressBorder]" value="{$info.upload.imageCompressBorder}"/>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    图片大小（kb）
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[imageMaxSize]" value="{$info.upload.imageMaxSize}"/>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <footer class="am-panel-footer am-cf">
+                                        <div class="am-fr">
+                                            <button class="am-btn am-btn-success am-btn-xs" data-model="ajaxform" data-option="{form:'#upload_form'}" data-success="callback">
+                                                <i class="am-icon am-icon-save">
+                                                </i>
+                                                保存
+                                            </button>
+                                        </div>
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+ 
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+        function callback(data) {
+            if (data.code == 1) {
+                layer.msg(data.msg, {
+                    icon: 1,
+                    time: 1000
+                }, function() {
+                    window.location.reload();
+                });
+            } else {
+                layer.msg(data.msg, {
+                    icon: 2
+                });
+            }
+        } 
+        </script>
+    </body>
+</html>

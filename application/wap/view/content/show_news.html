@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+    {include file="public/header" /}
+    <body style="background:#ececec">
+        <div class="pet_mian">
+            <div class="pet_head">
+                <header data-am-widget="header" class="am-header am-header-default pet_head_block">
+                    <div class="am-header-left am-header-nav ">
+                        <a href="javascript:" onclick="window.history.back();" class="iconfont pet_head_jt_ico">
+                            &#xe601;
+                        </a>
+                    </div>
+                    <div class="am-header-right am-header-nav">
+                        <a href="{:url('wap/index/index')}" class="am-icon-home am-icon-sm">
+                        </a>
+                    </div>
+                </header>
+            </div>
+            <div class="pet_content">
+                <div class="pet_content_block">
+                    <article data-am-widget="paragraph" class="am-paragraph am-paragraph-default pet_content_article" data-am-paragraph="{ tableScrollable: true, pureview: true }">
+                        <h1 class="pet_article_title">
+                            {$info.title}
+                        </h1>
+                        <div class="pet_article_user_time">
+                            发表于：{$info.addtime}
+                        </div>
+                        {$info.info.content}
+                    </article>
+                    <ul class="like_share_block am-g">
+                        {if $previous}
+                        <span class="am-u-sm-6 am-u-md-6 am-u-lg-6">
+                            上一篇：
+                            <a href="{:url('wap/content/show',['id'=> $previous.id])}">
+                                {$previous.title}
+                            </a>
+                        </span>
+                        {/if}
+                        {if $next}
+                        <span style="float: right;" class="am-u-sm-6 am-u-md-6 am-u-lg-6">
+                            下一篇：
+                            <a href="{:url('wap/content/show',['id'=> $next.id])}">
+                                {$next.title}
+                            </a>
+                        </span>
+                        {/if}
+                    </ul>
+                </div>
+                {include file="public/footer" /}
+            </div>
+        </div>
+    </body>
+</html>

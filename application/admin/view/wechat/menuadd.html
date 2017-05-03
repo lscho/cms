@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+{load href="__STATIC__/css/amazeui.min.css,__STATIC__/css/app.css" /}
+{load href="__STATIC__/js/jquery.min.js,__STATIC__/js/amazeui.min.js,__STATIC__/layer/layer.js,__STATIC__/js/app.js" /}
+<body class="theme-white" style="background-color: #fff;" data-type="widgets">
+    <div class="widget">
+        <form id="add_form" action="{:url('/admin/wechat/menuadd')}" class="am-form am-form-horizontal" method="post">     
+            <input type="hidden" name="info[id]" value="{$info.id}" />    
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-4 am-form-label widget-title">上级菜单</label>
+                <div class="am-u-sm-8">
+                    <select name="info[parentid]">
+                    <option value="0">一级菜单</option>
+                    {volist name="list" id="vo"}
+                    <option value="{$vo.id}" {if $Think.get.parentid==$vo.id||$info.parentid==$vo.id}selected{/if}>{$vo.name}</option>
+                    {/volist}
+                    </select>
+                </div>
+            </div>                
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-4 am-form-label widget-title">菜单类型</label>
+                <div class="am-u-sm-8">
+                    <select name="info[type]">
+                        {volist name=":lang('wechat_menu_type')" id="vo"}
+                        <option value="{$key}" {if $info.type==$key}selected{/if}>{$vo}</option>
+                        {/volist}
+                    </select>
+                </div>
+            </div>
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-4 am-form-label widget-title">按钮名字</label>
+                <div class="am-u-sm-8">
+                    <input type="text" name="info[name]" value="{$info.name}">
+                </div>
+            </div>
+
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-4 am-form-label widget-title">值</label>
+                <div class="am-u-sm-8">
+                    <input type="text" name="info[value]" value="{$info.value}">
+                </div>
+            </div>
+
+            <div class="am-form-group">
+                <div class="am-u-sm-8 am-u-sm-offset-4">
+                    <button type="button" data-model="ajaxform" data-option="{form:'#add_form'}" data-success="callback" class="am-btn am-btn-default am-btn-success">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+    function callback(data){
+        if(data.code==1){
+            parent.location.reload();
+        }else{
+            layer.msg(data.msg);
+        }
+    }
+    </script>
+</body>
+
+</html>

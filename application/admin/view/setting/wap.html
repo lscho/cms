@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+    <body class="theme-white" data-type="widgets">
+        {load href="__STATIC__/css/amazeui.min.css,__STATIC__/css/app.css" /}
+        {load href="__STATIC__/js/jquery.min.js,__STATIC__/js/amazeui.min.js,__STATIC__/layer/layer.js,__STATIC__/js/app.js" /}
+        <div class="am-g tpl-g">
+            <!-- 内容区域 -->
+            <div class="row-content am-cf">
+                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                    <div class="widget am-cf">
+                        <div class="widget-head am-cf">
+                            <div class="widget-title  am-cf">
+                                手机网站
+                            </div>
+                        </div>
+                        <div class="widget-body  am-fl">
+                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
+                                <div class="am-panel am-panel-default widget-panel">
+                                    <div class="am-panel-hd  widget-title">
+                                        基本
+                                    </div>
+                                    <div class="am-panel-bd">
+                                        <form id="wap_form" action="{:url('/admin/setting')}" class="am-form am-form-horizontal" method="post">
+                                            <input name="model" value="wap" type="hidden"/>
+
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    状态
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                <label class="am-radio-inline" style="padding-top: 0;">
+                                                    <input type="radio" value="0" name="info[close]" data-am-ucheck {if $info.wap.close!=1}checked{/if}> 开启
+                                                </label>                                                
+                                                <label class="am-radio-inline" style="padding-top: 0;">
+                                                    <input type="radio" value="1" name="info[close]" data-am-ucheck {if $info.wap.close==1}checked{/if}> 关闭
+                                                </label> 
+                                                </div>
+                                            </div>                                           
+
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    独立域名
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[host]" value="{$info.wap.host}" style="width: 200px;"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    站点标题
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[title]" value="{$info.wap.title}"/>
+                                                </div>
+                                            </div>                                             
+                                            
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    关键词
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[keywords]" value="{$info.wap.keywords}"/>
+                                                </div>
+                                            </div> 
+
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    站点描述
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" name="info[description]" value="{$info.wap.description}"/>
+                                                </div>
+                                            </div>                                                                                         
+                                        </form>
+                                    </div>
+                                    <footer class="am-panel-footer am-cf">
+                                        <div class="am-fr">
+                                        <button class="am-fr am-btn am-btn-success am-btn-xs" data-model="ajaxform" data-option="{form:'#wap_form'}" data-success="callback">
+                                            <i class="am-icon am-icon-save">
+                                            </i>
+                                            保存
+                                        </button>
+                                        </div>
+                                    </footer>
+                                </div>
+                            </div>
+
+                           <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
+                                <div class="am-panel am-panel-default widget-panel">
+                                    <div class="am-panel-hd  widget-title">
+                                        跳转
+                                    </div>
+                                    <div class="am-panel-bd">
+                                        <form id="jump_form" action="{:url('/admin/setting')}" class="am-form am-form-horizontal" method="post">
+                                            <input name="model" value="jump" type="hidden"/>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    首页
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <label class="am-radio-inline" style="padding-top: 0;">
+                                                        <input type="radio" value="1" name="info[index]" data-am-ucheck {if $info.jump.index==1}checked{/if}> 开启
+                                                    </label> 
+                                                    <label class="am-radio-inline" style="padding-top: 0;">
+                                                        <input type="radio" value="0" name="info[index]" data-am-ucheck {if $info.jump.index!=1}checked{/if}> 关闭
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    栏目页
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <label class="am-radio-inline" style="padding-top: 0;">
+                                                        <input type="radio" value="1" name="info[cate]" data-am-ucheck {if $info.jump.cate==1}checked{/if}> 开启
+                                                    </label> 
+                                                    <label class="am-radio-inline" style="padding-top: 0;">
+                                                        <input type="radio" value="0" name="info[cate]" data-am-ucheck {if $info.jump.cate!=1}checked{/if}> 关闭
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    列表页
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <label class="am-radio-inline" style="padding-top: 0;">
+                                                        <input type="radio" value="1" name="info[list]" data-am-ucheck {if $info.jump.list==1}checked{/if}> 开启
+                                                    </label> 
+                                                    <label class="am-radio-inline" style="padding-top: 0;">
+                                                        <input type="radio" value="0" name="info[list]" data-am-ucheck {if $info.jump.list!=1}checked{/if}> 关闭
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    详情页
+                                                </label>
+                                                <div class="am-u-sm-9">
+                                                    <label class="am-radio-inline" style="padding-top: 0;">
+                                                        <input type="radio" value="1" name="info[show]" data-am-ucheck {if $info.jump.show==1}checked{/if}> 开启
+                                                    </label> 
+                                                    <label class="am-radio-inline" style="padding-top: 0;">
+                                                        <input type="radio" value="0" name="info[show]" data-am-ucheck {if $info.jump.show!=1}checked{/if}> 关闭
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-text">
+                                                    说明
+                                                </label>
+                                                <div class="am-u-sm-9" style="padding-top: .6rem;">
+                                                    <span class="tips">开启后会自动判断访问设备是否为手机进行跳转</span>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <footer class="am-panel-footer am-cf">
+                                        <div class="am-fr">
+                                            <button class="am-btn am-btn-success am-btn-xs" data-model="ajaxform" data-option="{form:'#jump_form'}" data-success="callback">
+                                                <i class="am-icon am-icon-save">
+                                                </i>
+                                                保存
+                                            </button>
+                                        </div>
+                                    </footer>
+                                </div>
+                            </div>                            
+
+                        </div>
+ 
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+        function callback(data) {
+            if (data.code == 1) {
+                layer.msg(data.msg, {
+                    icon: 1,
+                    time: 1000
+                }, function() {
+                    window.location.reload();
+                });
+            } else {
+                layer.msg(data.msg, {
+                    icon: 2
+                });
+            }
+        } 
+        </script>
+    </body>
+</html>

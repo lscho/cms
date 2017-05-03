@@ -1,0 +1,58 @@
+<html style="overflow-x: hidden;">
+<body class="theme-white">
+{load href="__STATIC__/css/amazeui.min.css,__STATIC__/css/app.css,__STATIC__/am-tree/amazeui.tree.min.css" /}
+{load href="__STATIC__/js/jquery.min.js,__STATIC__/am-tree/amazeui.tree.min.js" /}  
+<div class="left-sidebar">
+
+<ul class="am-tree am-tree-folder-select tpl-tree" role="tree" id="_tree">
+  <li class="am-tree-branch am-hide" data-template="treebranch" role="treeitem" aria-expanded="false">
+    <div class="am-tree-branch-header">
+      <a href="javascript:">
+      <button class="am-tree-branch-name">
+        <span class="am-tree-icon am-tree-icon-folder"></span>
+        <span class="am-tree-label"></span>
+      </button>
+      </a>
+    </div>
+    <ul class="am-tree-branch-children" role="group"></ul>
+    <div class="am-tree-loader" role="alert">Loading...</div>
+  </li>
+
+  <li class="am-tree-item am-hide" data-template="treeitem" role="treeitem">
+  <a href="javascript:">
+    <button class="am-tree-item-name">
+      <span class="am-tree-icon am-tree-icon-item"></span>
+      <span class="am-tree-label"></span>
+    </button>
+  </a>
+  </li>
+
+</ul>
+
+</div>
+<script type="text/javascript">
+var parse=function(data){
+  for (var i in data) {
+    data[i]['title']=data[i].catname;
+    data[i].type=data[i].products?'folder':'item';
+  }
+  return data;
+}
+var data = parse(JSON.parse('{$catlist}'));
+$(function(){
+  $('#_tree').tree({
+    dataSource: function(options, callback){
+      callback({data: options.products?parse(options.products) : data});
+    },
+    multiSelect: false,
+    cacheItems: true,
+    folderSelect: false
+  }).on('selected.tree.amui',function(event, data){  //选中事件
+    $("[name='_content']",window.parent.document).attr('src','{:url("admin/content/index")}?catid='+data.target.catid);
+  }).on('deselected.tree.amui',function(event, data){ //取消选中事件
+    $("[name='_content']",window.parent.document).attr('src','{:url("admin/content/index")}');
+  });  
+})
+</script>
+</body>
+</html>

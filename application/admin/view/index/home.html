@@ -1,0 +1,179 @@
+    <link rel="stylesheet" href="__STATIC__/css/amazeui.min.css" />
+    <link rel="stylesheet" href="__STATIC__/css/app.css">
+    <body class="theme-white">
+            <div class="row-content am-cf">
+                <div class="row  am-cf">
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-4">
+                        <div class="widget am-cf" style="height: 175px;">
+                            <div class="widget-body am-fr">
+                                <ul class="am-list am-list-static">
+                                <li class="am-g">
+                                    <span class="widget-text am-u-sm-4">用户名</span>
+                                    <span class=" am-u-sm-8">{$admin.username}</span>
+                                </li>
+                                  <li class="am-g">
+                                       <span class="widget-text am-u-sm-4">上次登录</span>
+                                       <span class=" am-u-sm-8">{$admin.logintime}</span>
+                                  </li>
+                                  <li class="am-g">
+                                      <span class="widget-text am-u-sm-4">登录IP</span>
+                                      <span class=" am-u-sm-8">{$admin.loginip}</span>
+                                  </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-4">
+                        <div class="widget widget-primary am-cf" style="height: 175px;">
+                            <div class="widget-statistic-header">
+                                内容
+                            </div>
+                            <div class="widget-statistic-body">
+                                <div class="widget-statistic-value">
+                                    {$num}
+                                </div>
+                                <div class="widget-statistic-description">
+                                    当前系统共有 <strong>{$num}</strong> 篇内容
+                                </div>
+                                <span class="widget-statistic-icon am-icon-credit-card-alt"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-4">
+                        <div class="widget widget-purple am-cf" style="height: 175px;">
+                            <div class="widget-statistic-header">
+                                栏目
+                            </div>
+                            <div class="widget-statistic-body" style="height: 120px;">
+                                <div class="widget-statistic-value">
+                                    {$cate}
+                                </div>
+                                <div class="widget-statistic-description">
+                                    当前系统共有 <strong>{$cate}</strong> 个栏目
+                                </div>
+                                <span class="widget-statistic-icon am-icon-support"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row am-cf">
+                    <div class="am-u-sm-12 am-u-md-6">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title am-fl">服务器信息</div>
+                                <div class="widget-function am-fr">
+                                    <a href="javascript:;" class="am-icon-cog"></a>
+                                </div>
+                            </div>                        
+                            <div class="widget-body-md widget-body" style="height: 250px;">
+                            <table class="am-table am-table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td style="width: 40%">操作系统</td>
+                                        <td style="width: 80%">{$info.php_os}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>PHP版本</td>
+                                        <td>{$info.php_version}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>mysql版本</td>
+                                        <td>{$info.mysql_server}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>上传限制</td>
+                                        <td>{$info.upload_max_filesize}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>最大执行时间</td>
+                                        <td>{$info.max_ex_time}</td>
+                                    </tr>                            
+                                </tbody>
+                            </table>                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="am-u-sm-12 am-u-md-6">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title am-fl">运行状态</div>
+                                <div class="widget-function am-fr">
+                                    <a href="javascript:;" class="am-icon-cog"></a>
+                                </div>
+                            </div>
+                            <div class="widget-body widget-body-md am-fr"  style="height: 250px;">
+                            <table class="am-table am-table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td style="width: 40%">磁盘使用</td>
+                                        <td style="width: 80%">已用{$disk_total_space-$disk_free_space} G/ 全部{$disk_total_space} G</td>
+                                    </tr>
+                                    <tr>
+                                        <td>缓存目录</td>
+                                        <td>
+                                        {if $cache}
+                                        <span class="am-text-success">可写</span>
+                                        {else}
+                                        <span class="am-text-danger">不可写</span>
+                                        {/if}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>上传目录</td>
+                                        <td>
+                                        {if $upload}
+                                        <span class="am-text-success">可写</span>
+                                        {else}
+                                        <span class="am-text-danger">不可写</span>
+                                        {/if}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>数据库大小</td>
+                                        <td>{$db_size} M</td>
+                                    </tr>                                   
+                                    <tr>
+                                        <td>服务器时间</td>
+                                        <td>{:date('Y-m-d H:i:s')}</td>
+                                    </tr>                                    
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row am-cf">
+                    <div class="am-u-sm-12 am-u-md-12 widget-margin-bottom-lg">
+                        <div class="widget am-cf widget-body-lg">
+                            <div class="widget-body  am-fr">
+                                <div class="am-scrollable-horizontal ">
+                                    <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black " id="example-r">
+                                        <thead>
+                                            <tr>
+                                                <th>时间</th>
+                                                <th>用户名</th>
+                                                <th>IP地址</th>
+                                                <th>网址</th>
+                                                <th>动作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {volist name="log" id="vo"}
+                                            <tr class="gradeX">
+                                                <td>{:date('Y-m-d H:i:s',$vo.addtime)}</td>
+                                                <td>{$vo.username}</td>
+                                                <td>{$vo.ip}</td>
+                                                <td>{$vo.url}</td>
+                                                <td>{$vo.action}</td>
+                                            </tr>
+                                            {/volist}
+                                            <!-- more data -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </body>

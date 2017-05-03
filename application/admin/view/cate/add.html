@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+{load href="__STATIC__/css/amazeui.min.css,__STATIC__/css/app.css" /}
+{load href="__STATIC__/js/jquery.min.js,__STATIC__/js/amazeui.min.js,__STATIC__/layer/layer.js,__STATIC__/js/app.js" /}
+<body class="theme-white" style="background-color: #fff;" data-type="widgets">
+    <div class="widget">
+        <form id="add_form" action="{:url('/admin/cate/add','models_id='.$Request.param.models_id)}" class="am-form am-form-horizontal" method="post">
+            <input type="hidden" name="info[catid]" value="{$info.catid}" />
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-title">上级栏目</label>
+                <div class="am-u-sm-9">
+                    <select name="info[parentid]">
+                        <option value="0">做为顶级栏目</option>
+                        {volist name=":cache('catlist')" id="vo"}
+                        <option value="{$vo.catid}" {if $Request.get.parentid==$vo.catid||$info.parentid==$vo.catid}selected{/if}>|—{:str_repeat('——',$vo['level'])}{$vo.catname}</option>
+                        {/volist}
+                    </select>
+                </div>
+            </div>
+
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-title">栏目模型</label>
+                <div class="am-u-sm-9">
+                    <select name="info[models_id]">
+                        <option value="0">选择栏目模型</option>
+                        {volist name="models" id="vo"}
+                        <option value="{$vo.id}" {if $Request.param.models_id==$vo.id||$info.models_id==$vo.id}selected{/if}>{$vo.title}</option>
+                        {/volist}
+                    </select>
+                </div>
+            </div>             
+
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-title">栏目名称</label>
+                <div class="am-u-sm-9">
+                    <input type="text" name="info[catname]" value="{$info.catname}">
+                </div>
+            </div>                     
+
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-title">栏目模板</label>
+                <div class="am-u-sm-9">
+                    <select name="info[cate_tpl][pc]">
+                    <option value="cate">请选择（默认cate.html）</option>
+                    {volist name="tpl.cate" id="vo"}
+                    <option value="{$key}" {if $info.cate_tpl['pc']==$key}selected{/if}>{$vo}</option>
+                    {/volist}
+                    </select>
+                </div>
+            </div>
+
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-title">列表模板</label>
+                <div class="am-u-sm-9">
+                    <select name="info[list_tpl][pc]">
+                    <option value="list">请选择（默认list.html）</option>
+                    {volist name="tpl.list" id="vo"}
+                    <option value="{$key}" {if $info.list_tpl['pc']==$key}selected{/if}>{$vo}</option>
+                    {/volist}
+                    </select>
+                </div>
+            </div>             
+
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-title">内容模板</label>
+                <div class="am-u-sm-9">
+                    <select name="info[show_tpl][pc]">
+                    <option value="show">请选择（默认show.html）</option>
+                    {volist name="tpl.show" id="vo"}
+                    <option value="{$key}" {if $info.show_tpl['pc']==$key}selected{/if}>{$vo}</option>
+                    {/volist}
+                    </select>
+                </div>
+            </div>
+            {if $setting['wap']['close']!=1}
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-title">手机栏目模板</label>
+                <div class="am-u-sm-9">
+                    <select name="info[cate_tpl][wap]">
+                    <option value="cate">请选择（默认cate.html）</option>
+                    {volist name="wapTpl.cate" id="vo"}
+                    <option value="{$key}" {if $info.cate_tpl['pc']==$key}selected{/if}>{$vo}</option>
+                    {/volist}
+                    </select>
+                </div>
+            </div>
+
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-title">手机列表模板</label>
+                <div class="am-u-sm-9">
+                    <select name="info[list_tpl][wap]">
+                    <option value="list">请选择（默认list.html）</option>
+                    {volist name="wapTpl.list" id="vo"}
+                    <option value="{$key}" {if $info.list_tpl['wap']==$key}selected{/if}>{$vo}</option>
+                    {/volist}
+                    </select>
+                </div>
+            </div>             
+
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-title">手机内容模板</label>
+                <div class="am-u-sm-9">
+                <div class="am-input-group" style="width: 300px;">
+                  <span class="am-input-group-label" style="width: 140px;">show_{模型名}</span>
+                  <input type="text" class="am-form-field" name="info[show_tpl][wap]" value="{$info['show_tpl']['wap']}" style="width: 95px;">
+                  <span class="am-input-group-label" style="width: 50px;">.html</span>
+                </div>
+                </div>
+            </div>
+            {/if} 
+
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-title">工作流</label>
+                <div class="am-u-sm-9">
+                    <select name="info[workflow]">
+                    <option value="0">不需要审核</option>
+                    {volist name="workflow" id="vo"}
+                    <option value="{$vo.id}" {if $info.workflow==$vo.steps||(!$info&&$parent&&$parent['workflow']==$vo.steps)}selected{/if}>{$vo.title}</option>
+                    {/volist}
+                    </select>
+                </div>
+            </div>
+
+            {if $models}
+            {volist name="modelsData" id="vo"}
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-3 am-form-label widget-title">{$vo.title}</label>
+                <div class="am-u-sm-9">
+                    {:tpl($vo,$info.info[$vo.name])}
+                </div>
+            </div>            
+            {/volist}                                  
+            {/if}
+
+            <div class="am-form-group">
+                <div class="am-u-sm-9 am-u-sm-offset-3">
+                    <button type="button" data-model="ajaxform" data-option="{form:'#add_form'}" data-success="callback" class="am-btn am-btn-default am-btn-success">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+    function callback(data){
+        if(data.code==1){
+            window.top.location.reload();
+        }else{
+            layer.msg(data.msg);
+        }
+    }
+    </script>
+</body>
+
+</html>

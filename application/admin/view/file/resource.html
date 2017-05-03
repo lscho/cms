@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+    <body class="theme-white" data-type="widgets">
+        {load href="__STATIC__/css/amazeui.min.css,__STATIC__/css/app.css,__STATIC__/am-page/amazeui.page.css" /}
+        {load href="__STATIC__/js/jquery.min.js,__STATIC__/js/amazeui.min.js,__STATIC__/layer/layer.js,__STATIC__/js/app.js,__STATIC__/am-page/amazeui.page.js" /} 
+        {load href="__STATIC__/ueditor/third-party/webuploader/webuploader.min.js" /} 
+        <div class="am-g tpl-g">
+            <!-- 内容区域 -->
+            <div class="row-content am-cf">
+                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                    <div class="widget am-cf">
+                        <div class="widget-head am-cf">
+                            <div class="widget-title  am-cf">
+                                静态资源
+                            </div>
+                        </div>
+                        <div class="widget-body  am-fr">
+                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <div class="am-form-group">
+                                    <div class="am-btn-toolbar">                               
+                                            <span>
+                                                当前目录：
+                                                <a href="{:url('admin/file/resource')}">
+                                                    {:str_replace('&',DS,$root)}
+                                                </a>
+                                                {:str_replace('&',DS,$src)}
+                                            </span>
+                                            &nbsp;&nbsp;
+                                            <button class="am-btn am-btn-default am-btn-success am-btn-xs" data-model="layer" data-action="open" data-option="{title:'编辑',type:2,content:['{:url('admin/file/edit',['src'=> $src])}'],area: ['80%', '80%']}" data-close="close">
+                                                <span class="am-icon-plus">
+                                                </span>
+                                                新建文件
+                                            </button>  
+                                            &nbsp;&nbsp;
+                                            <button class="am-btn am-btn-default am-btn-success am-btn-xs" id="upload">
+                                                <span class="am-icon-file">
+                                                </span>
+                                                上传文件
+                                            </button>                                             
+                                            <span style="display: none;" name="{$name}" value="{$value}" id="_form_upload"></span>
+                                            &nbsp;&nbsp;
+                                            <button class="am-btn am-btn-default am-btn-success am-btn-xs"  data-model="ajax" data-action="get" data-url="{:url('admin/file/mkdir',['src'=> $src])}" data-msg="请输入名称" data-prompt=":new" data-success="callback">
+                                                <span class="am-icon-file">
+                                                </span>
+                                                新建文件夹
+                                            </button>                                              
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="am-u-sm-12">
+                                <form action="{:url('/admin/models/sort','type=1')}" method="post" id="sort_form">
+                                    <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 25px;">
+                                                </th>
+                                                <th>
+                                                    文件名
+                                                </th>
+                                                <th>
+                                                    大小
+                                                </th>
+                                                <th>
+                                                    最后修改时间
+                                                </th>
+                                                <th>
+                                                    操作
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {volist name="list" id="vo"}
+                                            <tr class="gradeX">
+                                                <td>
+                                                    <img src="__STATIC__/i/sys/{$vo.icon}.gif"/>
+                                                </td>
+                                                <td>
+                                                    {if $vo.type=='folder'}
+                                                    <a href="{:url('admin/file/resource',['src'=> $src.'&'.$vo.name])}">
+                                                        {$vo.name}
+                                                    </a>
+                                                    {else}
+                                                    {$vo.name}
+                                                    {/if}
+                                                </td>
+                                                <td>
+                                                    {:round($vo.size/1024,2)} KB
+                                                </td>
+                                                <td>
+                                                    {:date('Y-m-d H:i:s',$vo.time)}
+                                                </td>
+                                                <td>
+                                                    <a href="javascript:;"  data-model="ajax" data-action="get" data-url="{:url('admin/file/rename',['src'=> $src])}" data-msg="请输入名称" data-prompt=":new" data-option="{name:'{$vo.name}'}" data-success="callback">
+                                                            重命名
+                                                    </a>                                                
+                                                    |
+                                                    {if $vo.type=='folder'}编辑{else}
+                                                    <a href="javascript:" data-model="layer" data-action="open" data-option="{title:'编辑',type:2,content:['{:url('admin/file/edit',['src'=> $src])}?name={$vo.name}'],area: ['80%', '80%']}" data-close="close">编辑</a>
+                                                    {/if}
+                                                    |
+                                                    <a href="javascript:;" data-model="ajax" data-action="get" data-url="{:url('admin/file/delete',['src'=> $src])}" data-msg="正在执行危险操作，请输入立即执行进行操作" data-prompt="立即执行" data-option="{name:'{$vo.name}'}" data-success="callback" class="tpl-table-black-operation-del">
+                                                        删除
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            {/volist}
+                                            <!-- more data -->
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                            <div class="am-u-lg-12 am-cf">
+                                <button type="button" data-model="ajaxform" data-option="{form:'#sort_form'}" data-success="callback" class="am-btn am-btn-default am-btn-success am-btn-xs">
+                                    排序
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(function(){
+                    var uploader = WebUploader.create({
+                        auto: true,
+                        // swf文件路径
+                        swf: '__STATIC__/ueditor/third-party/webuploader/Uploader.swf',
+                        // 文件接收服务端。
+                        server: "{:url('admin/file/upload',['src'=> $src])}",
+                        // 选择文件的按钮。可选。
+                        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+                        pick: '#_form_upload',
+                        // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+                        resize: false,
+                        //表单名称
+                        fileVal:'upfile'
+                    });
+                    //上传成功
+                    uploader.on( 'uploadSuccess', function(file,response) {
+                        if(response.status=='1'){
+                            window.location.reload();
+                        }else{
+                            layer.msg(response.msg);
+                        }
+                    });
+                    uploader.on('uploadError',function(file,reason){
+                        layer.msg('上传失败，错误码：'+reason);
+                    });
+                    $("#upload").click(function(){
+                        $("#_form_upload input:file").click();
+                    });
+            });
+            function callback(data) {
+                if (data.code == 1) {
+                    layer.msg(data.msg, {
+                        icon: 1,
+                        time: 1000
+                    }, function() {
+                        window.location.reload();
+                    });
+                } else {
+                    layer.msg(data.msg, {
+                        icon: 2
+                    });
+                }
+            }
+            </script>
+    </body>
+</html>

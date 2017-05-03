@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<!--头部-->
+{include file="public/header" /}
+<!--头部结束-->
+<body>
+<!--导航-->
+{include file="public/navigation" /}
+<!--导航结束-->
+
+<!--top-->
+{include file="public/top" /}
+<!--top结束-->
+
+<div class="am-container-1">
+	<div class="service-center content">
+		{if $list}
+	    <ul class="service-ul">
+	    	{volist name="list" id="vo"}
+	    	<li class="am-u-lg-12 am-u-md-12 am-u-sm-12">
+	    		<div class="am-u-lg-8 am-u-md-8 am-u-sm-12 service-content">
+	    			<h4 class="w-blue"><a href="{:url('home/content/show',['id'=>$vo.id])}">{$vo.title}</a></h4>
+	    			<p>{$vo.abstract}</p>
+	    		</div>
+	    		<div class="am-u-lg-4 am-u-md-4 am-u-sm-12 service-img">
+	    		   <img src="{$vo.thumb}" />	
+	    		</div>
+	    	</li>
+			{/volist}
+	    </ul>
+	    {else}
+		<span>暂无文章</span>
+	    {/if}
+	</div>
+</div>
+{include file="public/footer" /}
+</body>
+</html>

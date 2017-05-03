@@ -1,0 +1,10 @@
+{/* 日期选择模板 */ }
+{load href="__STATIC__/am-date/moment-with-locales.min.js,__STATIC__/am-date/amazeui.datetimepicker-se.min.css,__STATIC__/am-date/amazeui.datetimepicker-se.min.js" /}    
+<input type="text"  id="{$id}" class="am-form-field tpl-form-no-bg" name="{$name}" value="{$value}" style="{$style}"  placeholder="{$tips}">
+<script type="text/javascript">
+$(function(){
+	$('#{$id}').datetimepicker({
+		defaultDate :new Date()
+	});
+});
+</script>

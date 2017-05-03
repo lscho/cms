@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<body class="theme-white" data-type="widgets">
+    {load href="__STATIC__/css/amazeui.min.css,__STATIC__/css/app.css,__STATIC__/am-page/amazeui.page.css" /}
+    {load href="__STATIC__/js/jquery.min.js,__STATIC__/js/amazeui.min.js,__STATIC__/layer/layer.js,__STATIC__/js/app.js,__STATIC__/am-page/amazeui.page.js" /}
+    <div class="am-g tpl-g">
+        <!-- 内容区域 -->
+            <div class="row-content am-cf">
+                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                    <div class="widget am-cf">
+                        <div class="widget-head am-cf">
+                            <div class="widget-title  am-cf">{$cate['catname']}</div>
+                        </div>
+                        <div class="widget-body  am-fr">
+                            <div class="am-u-sm-12 am-u-md-2 am-u-lg-2">
+                                <div class="am-form-group">
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <div class="am-dropdown" data-am-dropdown>
+                                                <button class="am-btn am-btn-default am-btn-success am-btn-xs"  data-model="layer" data-action="open" data-option="{title:'发布内容',type:2,content:['{:url('/admin/content/add','models_id='.$catlist[$catid]['models']['id'])}?catid={$catid}'],area: ['80%', '80%']}" data-close="close">
+                                                    <span class="am-icon-plus">
+                                                    </span>
+                                                    发布内容
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="am-u-sm-12 am-u-md-10 am-u-lg-10">
+                                <form method="get" class="am-form-inline" id="search_form"> 
+                                <input type="hidden" name="catid" value="{$catid}">                               
+                                <span>标题：</span>
+                                <div class="am-form-group">
+                                    <input type="text" name="title" value="{$Request.get.title}"  class="am-form-field">
+                                </div>                                                              
+                                  <button type="submit" class="am-btn am-btn-default am-btn-xs am-btn-success  am-icon-search"></button>
+                                  {if $workflow}                                
+                                  {volist name="workflow" id="vo"}
+                                  <label class="am-radio-inline">
+                                    <input type="radio" name="status" value="{$vo.status}" data-am-ucheck {eq name="$status" value="$vo.status"}checked{/eq}> {$vo.workflow_name}
+                                  </label>
+                                  {/volist}
+                                  {/if}                                   
+                                </form>                               
+                            </div>                             
+                            <div class="am-u-sm-12">
+                                <form action="{:url('/admin/content/sort')}" method="post" id="sort_form">
+                                    <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                <label class="am-checkbox">
+                                                  <input type="checkbox" value="" data-am-ucheck data-model="check" data-action=".check">
+                                                </label>
+                                                </th>
+                                                <th>排序</th>
+                                                <th>ID</th>
+                                                <th>标题</th>
+                                                {volist name="ModelsData" id="vo"}
+                                                {if $vo.models_type=='content'&&$vo.admin_show==1}
+                                                <th>
+                                                    {$vo.title}
+                                                </th>
+                                                {/if}
+                                                {/volist}                                                
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {volist name="list" id="vo"}
+                                            <tr class="gradeX">
+                                                <td>
+                                                <label class="am-checkbox">
+                                                  <input type="checkbox" class="check" name="ids[{$vo.id}]" value="{$vo.id}" data-am-ucheck>
+                                                </label>
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="sort[{$vo.id}]" value="{$vo.sort}" class="widget-sort">
+                                                </td>
+                                                <td>{$vo.id}</td>
+                                                <td>
+                                                    <div class="am-text-truncate" style="width: 300px;">【{$vo.models.title}】{$vo.title}</div>
+                                                </td>
+                                                {volist name="ModelsData" id="v"}
+                                                {if $v.models_type=='content'&&$v.admin_show==1}
+                                                <td>
+                                                    {if $v.is_system==1}
+                                                    {:show($v,$vo[$v.name])}
+                                                    {else}
+                                                    {:show($v,$vo['info'][$v.name])}
+                                                    {/if}
+                                                </td>
+                                                {/if}
+                                                {/volist}
+                                                <td>
+                                                    <div class="tpl-table-black-operation">
+                                                        <a href="javascript:;" data-model="layer" data-action="open" data-option="{title:'内容编辑',type:2,content:['{:url('/admin/content/add','models_id='.$vo.models_id)}?id={$vo.id}'],area: ['80%', '80%']}">
+                                                            <i class="am-icon-pencil"></i> 编辑
+                                                        </a>
+                                                        <a href="javascript:;" data-model="ajax" data-action="get" data-url="{:url('/admin/content/recycle')}" data-msg="确定要删除吗？" data-option="{id:{$vo.id}}" data-success="callback" class="tpl-table-black-operation-del">
+                                                            <i class="am-icon-trash"></i> 删除
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {/volist}
+                                            <!-- more data -->
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                            <div class="am-u-lg-12 am-cf">
+                                <button type="button" data-model="ajaxform" data-option="{form:'#sort_form',url:'{:url('/admin/content/sort')}'}" data-success="callback" class="am-btn am-btn-default am-btn-success am-btn-xs">排序</button>
+                                <button type="button" data-model="ajaxform" data-option="{form:'#sort_form',url:'{:url('/admin/content/all',['action'=>'recycle'])}'}" data-success="callback" data-msg="确定要删除吗？" class="am-btn am-btn-default am-btn-danger am-btn-xs">删除</button>
+                                {if $workflow}
+                                <button type="button" data-model="ajaxform" data-option="{form:'#sort_form',url:'{:url('/admin/content/all',['action'=>'adopt'])}'}" data-success="callback" class="am-btn am-btn-default am-btn-success am-btn-xs">通过</button>
+                                <button type="button" data-model="ajaxform" data-option="{form:'#sort_form',url:'{:url('/admin/content/all',['action'=>'refuse'])}'}" data-success="callback" class="am-btn am-btn-default am-btn-danger am-btn-xs">退稿</button>
+                                {/if}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <script type="text/javascript">
+    function callback(data) {
+        if (data.code == 1) {
+            layer.msg(data.msg, {
+                icon: 1,
+                time: 1000
+            }, function() {
+                window.location.reload();
+            });
+        } else {
+            layer.msg(data.msg, {
+                icon: 2
+            });
+        }
+    } 
+    $(function(){
+        $("[name='status']").click(function(){
+            $("#search_form").submit();
+        });
+    }); 
+    </script>
+</body>
+
+</html>

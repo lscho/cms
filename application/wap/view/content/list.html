@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+    {include file="public/header" /}
+    <body style="background:#ececec">
+        <div class="pet_mian">
+            <div class="pet_head">
+                <header data-am-widget="header" class="am-header am-header-default pet_head_block">
+                    <div class="am-header-left am-header-nav ">
+                        <a href="javascript:" onclick="window.history.back();" class="iconfont pet_head_jt_ico">
+                            &#xe601;
+                        </a>
+                    </div>
+                    <div class="am-header-right am-header-nav">
+                        <a href="{:url('wap/index/index')}" class="am-icon-home am-icon-sm">
+                        </a>
+                    </div>
+                </header>
+            </div>
+            <div class="pet_content pet_content_list">
+                <div class="pet_article_like">
+                    <div class="pet_content_main pet_article_like_delete">
+                        <div data-am-widget="list_news" class="am-list-news am-list-news-default am-no-layout">
+                            <div class="am-list-news-bd">
+                                <ul class="am-list">
+                                    <!--缩略图在标题右边-->
+                                    {volist name="list" id="vo" key="key"}
+                                    <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-right pet_list_one_block">
+                                        <div class="pet_list_one_info">
+                                            <div class="pet_list_one_info_l am-text-truncate" style="width: 70%;">
+                                                <a href="{:url('wap/content/show',['id'=> $vo.id])}" class="">
+                                                    {$vo.title}
+                                                </a>
+                                            </div>
+                                            <div class="pet_list_one_info_r">
+                                                <div class="pet_list_tag pet_list_tag_xxs">
+                                                    <a href="{:url('wap/content/cate',['catid'=> $vo.catid])}">
+                                                        {$vo.cate.catname}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class=" am-u-sm-{if $vo.info.thumb}8{else}12{/if} am-list-main pet_list_one_nr">
+                                            <div class="pet_list_one_info_name">
+                                                {$vo.username}
+                                            </div>
+                                            <div class="am-list-item-text pet_list_one_text">
+                                                {if $vo.info.description}{$vo.info.description}{else}{:strip_tags($vo.info.content)}{/if}
+                                            </div>
+                                        </div>
+                                        {if $vo.info.thumb}
+                                        <div class="am-u-sm-4 am-list-thumb">
+                                            <a href="###" class="">
+                                                <img src="__UPLOAD__{$vo.info.thumb}" class="pet_list_one_img" alt=""/>
+                                            </a>
+                                        </div>
+                                        {/if}
+                                    </li>
+                                    {/volist}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {include file="public/footer" /}
+            <script>
+            $(function(){
+                // 动态计算新闻列表文字样式
+                auto_resize();
+                $(window).resize(function() {
+                    auto_resize();
+                });
+                $('.am-list-thumb img').load(function(){
+                    auto_resize();
+                });
+            
+                $('.am-list > li:last-child').css('border','none');
+                function auto_resize(){
+                   $('.pet_list_one_nr').height($('.pet_list_one_img').height()?$('.pet_list_one_img').height():$(".am-list-item-text").height()+30);
+            
+                }
+                    $('.pet_nav_gengduo').on('click',function(){
+                        $('.pet_more_list').addClass('pet_more_list_show');
+                   });
+                    $('.pet_more_close').on('click',function(){
+                        $('.pet_more_list').removeClass('pet_more_list_show');
+                    });
+            });
+            </script>
+        </div>
+    </body>
+</html>

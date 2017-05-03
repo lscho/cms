@@ -1,0 +1,26 @@
+<body class="theme-white">
+    {load href="__STATIC__/css/amazeui.min.css,__STATIC__/css/app.css" /}
+    {load href="__STATIC__/js/jquery.min.js,__STATIC__/js/amazeui.min.js,__STATIC__/js/app.js" /}
+    <div class="left-sidebar">
+        <!-- 菜单 -->
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a data-sidebar-frame href="javascript:" data-src="{:url('admin/form/index')}" target="_content">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo">
+                    </span>
+                    表单管理
+                </a>
+            </li>
+            <hr data-am-widget="divider" style="" class="am-divider am-divider-default" />
+            {volist name="list" id="vo"}
+            <li class="sidebar-nav-link">
+                <a data-sidebar-frame href="javascript:" data-src="{:url('admin/form/datas',['id'=>$vo.id])}" target="_content">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo">
+                    </span>
+                    {$vo.title}
+                </a>
+            </li>
+            {/volist}
+        </ul>
+    </div>
+</body>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<body class="theme-white" data-type="widgets">
+    {load href="__STATIC__/css/amazeui.min.css,__STATIC__/css/app.css" /}
+    {load href="__STATIC__/js/jquery.min.js,__STATIC__/js/amazeui.min.js,__STATIC__/layer/layer.js,__STATIC__/js/app.js" /}
+    <div class="am-g tpl-g">
+        <!-- 内容区域 -->
+            <div class="row-content am-cf">
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title  am-cf">栏目列表</div>
+                            </div>
+                            <div class="widget-body  am-fr">
+                                <div class="am-u-sm-12">
+                                <form action="{:url('/admin/cate/sort')}" method="post" id="sort_form">
+                                    <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                                        <thead>
+                                            <tr>
+                                                <th>排序</th>
+                                                <th>ID</th>
+                                                <th>名称</th>
+                                                <th>模型</th>
+                                                <th>数据量</th>
+                                                <th>内容</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {volist name="catlist" id="vo"}
+                                            {if ($Request.get.catid and $Request.get.catid==$vo.catid)||!$Request.get.catid}
+                                            <tr class="gradeX">
+                                                <td><input type="text" name="sort[{$vo.catid}]" value="{$vo.sort}" class="widget-sort"></td>
+                                                <td>{$vo.catid}</td>
+                                                <td>|—{:str_repeat('——',$vo['level'])}{$vo.catname}</td>
+                                                <td>{$vo.models.title}</td>
+                                                <td>{$vo.count}</td>
+                                                <td>
+                                                    <a href="{:url('admin/content/index')}?catid={$vo.catid}">查看</a>
+                                                </td>
+                                            </tr>
+                                            {/if}
+                                            {/volist}
+                                            <!-- more data -->
+                                        </tbody>
+                                    </table>
+                                    </form>
+                                </div>
+                                <div class="am-u-lg-12 am-cf">
+                                    <div class="am-fl">
+                                        <button type="button" data-model="ajaxform"  data-option="{form:'#sort_form'}" data-success="callback" class="am-btn am-btn-default am-btn-success am-btn-xs">排序</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <script type="text/javascript">
+        function callback(data){
+            if(data.code==1){
+                layer.msg(data.msg, {icon: 1,time: 1000},function(){
+                    window.top.location.reload();
+                });
+                return true;
+            }else{
+                layer.msg(data.msg, {icon: 2});
+                return false;
+            }            
+        }
+    </script>
+</body>
+</html>

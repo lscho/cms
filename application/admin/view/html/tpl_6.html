@@ -1,0 +1,9 @@
+{/* 选择框模板 */ }
+<select name="{$name}" id="{$id}">
+    {volist name="data" id="vo"}
+    <option value="{$vo[0]}" {if $value==$vo[0]}selected{/if}>
+        {$vo[1]}
+    </option>
+    {/volist}
+</select>
+<font class="tips">{$tips}</font>

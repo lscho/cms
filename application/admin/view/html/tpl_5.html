@@ -1,0 +1,13 @@
+{/* 富文本模板 */ }
+{load href="__STATIC__/ueditor/ueditor.config.js,__STATIC__/ueditor/ueditor.all.min.js,__STATIC__/ueditor/ueditor.parse.js" /}
+<script  id="{$id}" name="{$name}" type="text/plain" style="{$style}"  placeholder="{$tips}">{$value}</script>
+<font class="tips">{$tips}</font>
+<script type="text/javascript">
+var _editor;
+$(function(){
+	window.UEDITOR_CONFIG.serverUrl="{:url('admin/editor/index')}"
+	_editor = UE.getEditor('{$id}',{
+        initialFrameHeight:'320'
+    });
+})
+</script>

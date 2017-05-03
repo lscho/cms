@@ -1,0 +1,18 @@
+{/* 颜色选择模板 */ }
+{load href="__STATIC__/js/jquery.ColorPicker.js" /}    
+<input type="text"  id="{$id}" name="{$name}" value="{$value}" style="{$style}" placeholder="{$tips}"/>
+<script type="text/javascript">
+$(function(){
+	$("#{$id}").colorpicker({
+	    fillcolor:true,
+	    success:function(o,color){
+	        $(o).css("color",color);
+	        $("#info_title").css("color",color);
+	    }
+	});
+	if($("#{$id}").val()){
+		$("#{$id}").css("color",$("#{$id}").val());
+		$("#info_title").css("color",$("#{$id}").val());
+	}
+})
+</script>

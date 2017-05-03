@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<body class="theme-white" data-type="widgets">
+    {load href="__STATIC__/css/amazeui.min.css,__STATIC__/css/app.css,__STATIC__/am-page/amazeui.page.css"" /}
+    {load href="__STATIC__/js/jquery.min.js,__STATIC__/js/amazeui.min.js,__STATIC__/layer/layer.js,__STATIC__/js/app.js,__STATIC__/am-page/amazeui.page.js" /}
+    <div class="am-g tpl-g">
+        <!-- 内容区域 -->
+            <div class="row-content am-cf">
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title  am-cf">角色列表</div>
+                            </div>
+                            <div class="widget-body  am-fr">
+                                <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                                    <div class="am-form-group">
+                                        <div class="am-btn-toolbar">
+                                            <div class="am-btn-group am-btn-group-xs">
+                                                <button type="button" class="am-btn am-btn-default am-btn-success" data-model="layer" data-action="open" data-option="{title:'添加角色',type:2,content:['{:url('/admin/role/add')}','no'],area: ['500px', '300px']}" data-close="close">
+                                                <span class="am-icon-plus"></span> 新增</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="am-u-sm-12">
+                                <form action="{:url('/admin/menu/sort')}" method="post" id="sort_form">
+                                    <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                                        <thead>
+                                            <tr>
+                                                <th>排序</th>
+                                                <th>名称</th>
+                                                <th>系统权限</th>
+                                                <th>栏目权限</th>
+                                                <th>操作权限</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {volist name="list" id="vo"}
+                                            <tr class="gradeX">
+                                                <td><input type="text" name="sort[{$vo.id}]" value="{$vo.sort}" class="widget-sort"></td>
+                                                <td>{$vo.role_name}</td>
+                                                <td>
+                                                    <div class="tpl-table-black-operation">
+                                                        <a href="javascript:;"  data-model="layer" data-action="open" data-option="{title:'分配系统权限',type:2,content:['{:url('/admin/role/menu')}?id={$vo.id}'],area: ['60%', '80%']}" class="tpl-table-black-operation-add">
+                                                            <i class="am-icon-edit"></i> 分配
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="tpl-table-black-operation">
+                                                        <a href="javascript:;"  data-model="layer" data-action="open" data-option="{title:'分配栏目权限',type:2,content:['{:url('/admin/role/cate')}?id={$vo.id}'],area: ['60%', '80%']}" class="tpl-table-black-operation-add">
+                                                            <i class="am-icon-edit"></i> 分配
+                                                        </a>
+                                                    </div>
+                                                </td>                                                                                   <td>
+                                                    <div class="tpl-table-black-operation">
+                                                        <a href="javascript:;"  data-model="layer" data-action="open" data-option="{title:'分配操作权限',type:2,content:['{:url('/admin/role/node')}?id={$vo.id}'],area: ['60%', '80%']}" class="tpl-table-black-operation-add">
+                                                            <i class="am-icon-edit"></i> 分配
+                                                        </a>
+                                                    </div>
+                                                </td>              
+                                                <td>
+                                                    <div class="tpl-table-black-operation">
+                                                        <a href="javascript:;"  data-model="layer" data-action="open" data-option="{title:'添加分类',type:2,content:['{:url('/admin/role/add')}?id={$vo.id}','no'],area: ['500px', '300px']}">
+                                                            <i class="am-icon-pencil"></i> 编辑
+                                                        </a>
+                                                        {if $vo.id!=1}
+                                                        <a href="javascript:;"  data-model="ajax" data-action="get" data-url="{:url('/admin/role/delete')}" data-msg="确定要删除吗？" data-option="{id:{$vo.id}}" data-success="del_success" class="tpl-table-black-operation-del">
+                                                            <i class="am-icon-trash"></i> 删除
+                                                        </a>
+                                                        {/if}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {/volist}
+                                            <!-- more data -->
+                                        </tbody>
+                                    </table>
+                                    </form>
+                                </div>
+                                <div class="am-u-lg-12 am-cf">
+                                    <div class="am-fl">
+                                        <button type="button" data-model="ajaxform"  data-option="{form:'#sort_form'}" data-success="callback" class="am-btn am-btn-default am-btn-success am-btn-xs">排序</button>
+                                    </div>                                 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <script type="text/javascript">
+        function callback(data){
+            if(data.code==1){
+                layer.msg(data.msg, {icon: 1,time: 1000},function(){
+                    window.top.location.reload();
+                });
+                return true;
+            }else{
+                layer.msg(data.msg, {icon: 2});
+                return false;
+            }            
+        }
+        function del_success(data) {
+            if(data.code==1){
+                layer.msg(data.msg, {icon: 1,time: 1000},function(){
+                    window.top.location.reload();
+                });
+            }else{
+                layer.msg(data.msg, {icon: 2});
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<body class="theme-white" data-type="widgets">
+    {load href="__STATIC__/css/amazeui.min.css,__STATIC__/css/app.css" /}
+    {load href="__STATIC__/js/jquery.min.js,__STATIC__/js/amazeui.min.js,__STATIC__/layer/layer.js,__STATIC__/js/app.js" /}
+    <div class="am-g tpl-g">
+        <!-- 内容区域 -->
+            <div class="row-content am-cf">
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title  am-cf">栏目列表</div>
+                            </div>
+                            <div class="widget-body  am-fr">
+                                <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                                    <div class="am-form-group">
+                                        <div class="am-btn-toolbar">
+                                            <div class="am-btn-group am-btn-group-xs">
+                                            <div class="am-dropdown" data-am-dropdown>
+                                                <button class="am-btn am-btn-default am-btn-success am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle>
+                                                    <span class="am-icon-plus">
+                                                    </span>
+                                                    创建栏目
+                                                </button>
+                                                <ul class="am-dropdown-content">
+                                                    {volist name="models" id="vo"}
+                                                    <li>
+                                                        <a href="javascript:" data-model="layer" data-action="open" data-option="{title:'创建栏目',type:2,content:['{:url('/admin/cate/add','models_id='.$vo.id)}'],area: ['50%', '80%']}" data-close="close">
+                                                            {$vo.title}
+                                                        </a>
+                                                    </li>
+                                                    {/volist}
+                                                </ul>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="am-u-sm-12">
+                                <form action="{:url('/admin/cate/sort')}" method="post" id="sort_form">
+                                    <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                                        <thead>
+                                            <tr>
+                                                <th>排序</th>
+                                                <th>ID</th>
+                                                <th>名称</th>
+                                                <th>模型</th>
+                                                <th>访问</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {volist name="catlist" id="vo"}
+                                            {if ($Request.get.catid and $Request.get.catid==$vo.catid)||!$Request.get.catid}
+                                            <tr class="gradeX">
+                                                <td><input type="text" name="sort[{$vo.catid}]" value="{$vo.sort}" class="widget-sort"></td>
+                                                <td>{$vo.catid}</td>
+                                                <td>|—{:str_repeat('——',$vo['level'])}{$vo.catname}</td>
+                                                <td>{$vo.models.title}</td>
+                                                <td><a href="{:url('home/content/cate','catid='.$vo.catid,'html',$url)}"   target="_blank">打开</a></td>
+                                                <td>
+                                                    <div class="tpl-table-black-operation">
+                                                        <a href="javascript:;"  data-model="layer" data-action="open" data-option="{title:'添加栏目',type:2,content:['{:url('/admin/cate/add','models_id='.$vo.models_id)}?parentid={$vo.catid}'],area: ['50%', '80%']}" class="tpl-table-black-operation-add">
+                                                            <i class="am-icon-plus"></i> 新增
+                                                        </a>
+                                                        <a href="javascript:;"  data-model="layer" data-action="open" data-option="{title:'编辑栏目',type:2,content:['{:url('/admin/cate/add','models_id='.$vo.models_id)}?catid={$vo.catid}'],area: ['50%', '80%']}">
+                                                            <i class="am-icon-pencil"></i> 编辑
+                                                        </a>
+                                                        <a href="javascript:;"  data-model="ajax" data-action="get" data-url="{:url('/admin/cate/delete')}" data-msg="确定要删除吗？" data-option="{catid:{$vo.catid}}" data-success="callback" class="tpl-table-black-operation-del">
+                                                            <i class="am-icon-trash"></i> 删除
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {/if}
+                                            {/volist}
+                                            <!-- more data -->
+                                        </tbody>
+                                    </table>
+                                    </form>
+                                </div>
+                                <div class="am-u-lg-12 am-cf">
+                                    <div class="am-fl">
+                                        <button type="button" data-model="ajaxform"  data-option="{form:'#sort_form'}" data-success="callback" class="am-btn am-btn-default am-btn-success am-btn-xs">排序</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <script type="text/javascript">
+        function callback(data){
+            if(data.code==1){
+                layer.msg(data.msg, {icon: 1,time: 1000},function(){
+                    window.top.location.reload();
+                });
+                return true;
+            }else{
+                layer.msg(data.msg, {icon: 2});
+                return false;
+            }            
+        }
+    </script>
+</body>
+</html>

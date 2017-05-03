@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    {load href="__STATIC__/css/amazeui.min.css,__STATIC__/css/app.css" /}
+    {load href="__STATIC__/js/jquery.min.js,__STATIC__/js/amazeui.min.js,__STATIC__/layer/layer.js,__STATIC__/js/app.js" /}
+    <body class="theme-white" style="background-color: #fff;" data-type="widgets">
+        <div class="widget">
+            <form id="add_form" action="{:url('/admin/role/menu')}" class="am-form am-form-horizontal" method="post">
+                <input type="hidden" name="role_id" value="{$Think.get.id}"/>
+                <div class="am-g" style="width: 85%">
+                    <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                        <thead>
+                            <tr>
+                                <th>
+                                    名称
+                                </th>
+                                <th>
+                                    权限
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {volist name=":cache('menu')" id="vo"}
+                            <tr class="gradeX">
+                                <td>
+                                    |—{:str_repeat('——',$vo['level'])}{$vo.title}
+                                </td>
+                                <td>
+                                    <div class="tpl-switch">
+                                        <input type="checkbox" class="ios-switch bigswitch tpl-switch-btn" name="id[]" value="{$vo.id}" {if in_array($vo.id,$menu)}checked{/if} data-parent="{$vo.parentid}" data-action="select"/>
+                                        <div class="tpl-switch-btn-view">
+                                            <div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {/volist}
+                            <!-- more data -->
+                        </tbody>
+                    </table>
+                    <div class="am-form-group">
+                        <div class="am-u-sm-8 am-u-sm-offset-4">
+                            <button type="button" data-model="ajaxform" data-option="{form:'#add_form'}" data-success="callback" class="am-btn am-btn-default am-btn-success">
+                                保存
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <script type="text/javascript">
+        function callback(data){
+            if(data.code==1){
+                window.top.location.reload();
+            }else{
+                layer.msg(data.msg);
+            }
+        }
+        $(function() {
+            $("[data-action='select']").click(function(){
+                var checked=$(this).is(':checked');
+                var val=$(this).val();
+                $("[data-parent="+val+"]").prop('checked',checked);
+            });
+        });
+        </script>
+    </body>
+</html>

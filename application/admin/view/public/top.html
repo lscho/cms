@@ -1,0 +1,44 @@
+<header>
+    <!-- logo -->
+    <div class="am-fl tpl-header-logo">
+        <a href="javascript:;"><img src="__STATIC__/img/logo.png" alt=""></a>
+    </div>
+    <!-- 右侧内容 -->
+    <div class="tpl-header-fluid">
+        <!-- 搜索 -->
+        <div class="am-fl">
+      <ul class="am-nav am-nav-pills am-topbar-nav">
+        {volist name="menu" id="vo"}
+        {if $vo.parentid==0 and in_array($vo.id,session('menu_node'))}
+        <li>
+            <a href="javascript:" data-frame data-sidebar="{if $vo.sidebar}{:url($vo.sidebar)}{else}{:url('admin/index/sidebar','parentid='.$vo.id)}{/if}" data-content="{:url($vo.model.'/'.$vo.controller.'/'.$vo.action)}">
+                <i class="am-icon-{$vo.icon ?$vo.icon : 'angle-right'} sidebar-nav-link-logo"></i> {$vo.title}
+            </a>
+        </li>
+        {/if}
+        {/volist}      
+    </ul>      
+        </div>
+        <!-- 其它功能-->
+        <div class="am-fr tpl-header-navbar">
+            <ul>
+                <!-- 欢迎语 -->
+                <li class="am-text-sm tpl-header-navbar-welcome">
+                    <a href="javascript:;">欢迎你, <span>{$Think.session.admin_username}</span> </a>
+                </li>
+                <!-- 前台首页 -->
+                <li class="am-text-sm">
+                    <a href="{if $setting.site.host}http://{$url}{else}/{/if}" target="_blank">
+                        <span class="am-icon-home"></span> 前台
+                    </a>
+                </li>                
+                <!-- 退出 -->
+                <li class="am-text-sm">
+                    <a href="{:url('/admin/login/out')}">
+                        <span class="am-icon-sign-out"></span> 退出
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>

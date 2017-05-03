@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<body class="theme-white" style="background-color: #fff;" data-type="widgets">
+    {load href="__STATIC__/css/amazeui.min.css,__STATIC__/css/app.css" /}
+    {load href="__STATIC__/js/jquery.min.js,__STATIC__/js/amazeui.min.js,__STATIC__/layer/layer.js,__STATIC__/js/app.js" /}
+    <div class="widget">
+        <form id="add_form" action="{:url('/admin/form/add','models_id='.$Request.param.models_id)}" class="am-form am-form-horizontal" method="post">
+            <input type="hidden" name="info[id]" value="{$info.id}">
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-2 am-form-label widget-title">表单名称</label>
+                <div class="am-u-sm-10">
+                    <input type="text" name="info[title]" value="{$info.title}">
+                </div>
+            </div>
+            {volist name="form" id="vo"}
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-2 am-form-label widget-title">{$vo.title}</label>
+                <div class="am-u-sm-10">
+                    {:tpl($vo,$info.info[$vo.name])}
+                </div>
+            </div>            
+            {/volist}                                        
+
+            <div class="am-form-group">
+                <div class="am-u-sm-10 am-u-sm-offset-2">
+                    <button type="button" data-model="ajaxform" data-option="{form:'#add_form'}" data-success="callback" class="am-btn am-btn-default am-btn-success">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+    function callback(data){
+        if(data.code==1){
+            window.top.location.reload();
+        }else{
+            layer.msg(data.msg);
+        }
+    }
+    </script>
+</body>
+
+</html>

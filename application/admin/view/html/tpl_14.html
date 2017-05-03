@@ -1,0 +1,69 @@
+{/* 多图片上传模板 */ }      
+{load href="__STATIC__/ueditor/third-party/webuploader/webuploader.min.js" /}   
+<style type="text/css">
+#_form_imgs{padding:5px;}
+#_form_imgs ul li{display: inline-block;margin: 5px;}
+</style>      
+<div id="uploader" class="app_uploader">
+    <div class="tpl-form-file-img" id="_form_imgs">
+        <ul>
+            {volist name="value_data" id="vo"}
+            <li>
+                <div><img src="{$vo}"></div>
+                <div><a href='javascript:'>删除</a></div>
+            </li>
+            {/volist}
+        </ul>
+    </div>
+    <div id="_form_pickers">添加图片</div>
+    <input id="{$id}" name="{$name}" value="{$value}"  type="hidden" id="_form_thumbs">
+</div>
+<font class="tips">{$tips}</font>
+<script type="text/javascript">
+$(function(){
+        var uploader = WebUploader.create({
+            auto: true,
+            // swf文件路径
+            swf: '__STATIC__/ueditor/third-party/webuploader/Uploader.swf',
+            // 文件接收服务端。
+            server: "{:url('/admin/editor/index')}?action=uploadimage",
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#_form_pickers',
+            // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+            resize: false,
+            //表单名称
+            fileVal:'upfile',
+            duplicate :true
+        });
+        //上传成功
+        uploader.on( 'uploadSuccess', function(file,response) {
+            if(response.state=='SUCCESS'){
+                $li="<li>";
+                $li+="<div><img src="+ response.url + " ></div>";
+                $li+="<div><a href='javascript:'>删除</a></div>";
+                $li+="</li>";
+                $("#_form_imgs ul").append($li);
+                getValue();
+            }else{
+                layer.msg(response.state);
+            }
+        });
+        uploader.on('uploadError',function(file,reason){
+            layer.msg('上传失败，错误码：'+reason);
+        });
+        //获取图片集到input
+        var getValue=function(){
+            $("#{$id}").val("");
+            $("#_form_imgs ul li img").each(function(){
+                $("#{$id}").val($("#{$id}").val()+$(this).attr('src')+',');
+            });
+        }        
+        //删除图片
+        $("#_form_imgs").on('click','ul li a',function(){
+            //移除dom
+            $(this).closest('li').remove();
+            getValue();
+        });
+})
+</script>
